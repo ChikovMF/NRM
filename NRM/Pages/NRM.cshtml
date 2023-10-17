@@ -1,0 +1,21 @@
+﻿@page
+@model NRM.Pages.NRMModel
+@{
+}
+
+<form method="post">
+    <button type="submit" class="btn btn-sm btn-outline-secondary">
+        <div id="spiner" class="d-none">
+            <span class="spinner-border spinner-border-sm" role="status"></span>
+            <span class="sr-only">Обработка...</span>
+        </div>
+        <span id="buttonText">Обновить</span>
+    </button>
+</form>
+
+<script>
+    window.addEventListener('submit', function () {
+        $('#buttonText').addClass('d-none');
+        $('#spiner').removeClass('d-none');
+    });
+</script>

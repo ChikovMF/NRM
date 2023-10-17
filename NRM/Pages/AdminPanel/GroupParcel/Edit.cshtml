@@ -1,0 +1,99 @@
+﻿@page "{id:int}"
+@model NRM.Pages.AdminPanel.GroupParcel.EditModel
+@{
+    ViewData["Title"] = $"Редактирование групповой посылки: {Model.Input.TrackNumber}";
+    @inject System.Text.Encodings.Web.JavaScriptEncoder encoder;
+}
+
+<main>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@ViewData["Title"]</h1>
+    </div>
+
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="Input.PlaceOfDepartureId"></label>
+            <select class="form-control" asp-for="Input.PlaceOfDepartureId" id="select-placeOfDeparture">
+            </select>
+            <span asp-validation-for="Input.PlaceOfDepartureId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.PlaceOfDeliveryId"></label>
+            <select class="form-control" asp-for="Input.PlaceOfDeliveryId" id="select-placeOfDelivery">
+            </select>
+            <span asp-validation-for="Input.PlaceOfDeliveryId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.DepartureDate"></label>
+            <input class="form-control form-control-sm" asp-for="Input.DepartureDate" />
+            <span asp-validation-for="Input.DepartureDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.DepartureTime"></label>
+            <input class="form-control form-control-sm" asp-for="Input.DepartureTime" />
+            <span asp-validation-for="Input.DepartureTime" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.StatusId"></label>
+            <select class="form-control form-control-sm" asp-for="Input.StatusId" asp-items="Model.Input.StatusItems"></select>
+            <span asp-validation-for="Input.StatusId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.ParcelsId"></label>
+            <select class="form-control" asp-for="Input.ParcelsId" id="select-parsels" multiple="multiple">
+                <option></option>
+            </select>
+            <span asp-validation-for="Input.ParcelsId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.UserId"></label>
+            <select class="" asp-for="Input.UserId" id="select-users">
+            </select>
+            <span asp-validation-for="Input.UserId" class="text-danger"></span>
+        </div>
+
+        <p>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Изменить</button>
+            </div>
+        </p>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    </form>
+</main>
+
+@section Styles {
+    <link rel="stylesheet" href="~/lib/select2/css/select2.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/select2/css/select2-bootstrap-5-theme.min.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script src="~/lib/select2/js/select2.min.js"></script>
+    <script src="~/lib/select2/js/ru.js"></script>
+    <script type="text/javascript" src="~/lib/select2/js/myObjects.js"></script>
+
+    <script type="text/javascript">
+        $('#select-placeOfDeparture').append('<option value="@encoder.Encode(Model.Input.PlaceOfDepartureNow.Id.ToString())" selected="selected">@encoder.Encode(Model.Input.PlaceOfDepartureNow.Name)</option>');
+        $('#select-placeOfDeparture').trigger('change');
+
+        $('#select-placeOfDelivery').append('<option value="@encoder.Encode(Model.Input.PlaceOfDeliveryNow.Id.ToString())" selected="selected">@encoder.Encode(Model.Input.PlaceOfDeliveryNow.Name)</option>');
+        $('#select-placeOfDelivery').trigger('change');
+
+        $('#select-users').append('<option value="@encoder.Encode(Model.Input.StartUser.Id.ToString())" selected="selected">@encoder.Encode(Model.Input.StartUser.FullName)</option>');
+        $('#select-users').trigger('change');
+
+        @foreach (var parsel in Model.Input.ParcelsNow)
+        {
+            <text>$('#select-parsels').append('<option value="@encoder.Encode(parsel.Id.ToString())" selected="selected">@encoder.Encode(parsel.Name)</option>'); </text>
+        }
+        $('#select-parsels').trigger('change');
+    </script>
+}

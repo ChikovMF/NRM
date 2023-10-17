@@ -1,0 +1,51 @@
+﻿@page
+@model NRM.Pages.AdminPanel.IndexModel
+@{
+    ViewData["Title"] = "Страница управления";
+}
+
+<div class="row">
+    <div class="col-3 border-end">
+        <ul class="flex-column list-unstyled">
+            @if (User.IsInRole("Полный администратор") || User.IsInRole("Администратор посылок") || User.IsInRole("Пользователь"))
+            {
+                <li><a asp-page="GroupParcel/Index">Групповая посылки</a></li>
+                <li><a asp-page="Parcel/Index">Посылки</a></li>
+            }
+            @if (User.IsInRole("Полный администратор") || User.IsInRole("Администратор пользователей"))
+            {
+                <li><a asp-page="Role/Index">Роли</a></li>
+                <li><a asp-page="User/Index">Пользователи</a></li>
+            }
+            @if (User.IsInRole("Полный администратор") || User.IsInRole("Администратор посылок"))
+            {
+                <li><a asp-page="ParcelType/Index">Типы посылок</a></li>
+                <li><a asp-page="ParcelStatus/Index">Статусы</a></li>
+                <li><a asp-page="LogType/Index">Типы логов</a></li>
+                <li><a asp-page="LogParcel/Index">Логи посылок</a></li>
+            }
+            @if (User.IsInRole("Полный администратор"))
+            {
+                <li><a asp-page="Place/Index">Места</a></li>
+            }
+        </ul>
+    </div>
+
+    <main class="col-9">
+        <h1>Панель управления</h1>
+
+        <div style="width: 600px;">
+            <canvas id="chart1"></canvas>
+        </div>
+    </main>
+</div>
+
+@section Scripts {
+    <script src="~/lib/chart/chart.min.js"></script>
+
+    <script>
+        const data1 = @Html.Raw(Model.Data1);
+    </script>
+
+    <script src="~/lib/chart/myChart.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,40 @@
+﻿@page "{id:int}"
+@model NRM.Pages.ParcelModel
+@{
+    ViewData["Title"] = $"Посылка: {Model.Parcel.TrackNumber}";
+}
+
+<section>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@ViewData["Title"]</h1>
+    </div>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Трек-номер</td>
+                <td>@Model.Parcel.TrackNumber</td>
+            </tr>
+            <tr>
+                <td>Дата и время создания</td>
+                <td>@($"{Model.Parcel.DepartureTime.ToShortTimeString()} {Model.Parcel.DepartureDate.ToShortDateString()}")</td>
+            </tr>
+            <tr>
+                <td>Отправитель</td>
+                <td>@Model.Parcel.Sender</td>
+            </tr>
+            <tr>
+                <td>Получатель</td>
+                <td>@Model.Parcel.Recipient</td>
+            </tr>
+            <tr>
+                <td>Статус:</td>
+                <td>@Model.Parcel.Status</td>
+            </tr>
+            <tr>
+                <td>Тип:</td>
+                <td>@Model.Parcel.Type</td>
+            </tr>
+        </tbody>
+    </table>
+</section>

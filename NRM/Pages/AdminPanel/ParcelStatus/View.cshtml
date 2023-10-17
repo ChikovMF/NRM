@@ -1,0 +1,46 @@
+﻿@page "{id:int}"
+@model NRM.Pages.AdminPanel.ParcelStatus.ViewModel
+@{
+    ViewData["Title"] = $"Статус: {Model.ParcelStatus.Name}";
+}
+<section>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@ViewData["Title"]</h1>
+    </div>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Название</td>
+                <td>@Model.ParcelStatus.Name</td>
+            </tr>
+        </tbody>
+    </table>
+
+    @if (Model.ParcelStatus.Parcels != null && Model.ParcelStatus.Parcels.Count > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Трек-номер</th>
+                    <th>Отправитель</th>
+                    <th>Получатель</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var parcel in Model.ParcelStatus.Parcels)
+                {
+                    <tr>
+                        <td><a asp-page="/AdminPanel/Parcel/View" asp-route-id="@parcel.Id">@parcel.TrackNumber</a></td>
+                        <td>@parcel.Sender</td>
+                        <td>@parcel.Recipient</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Нет посылок с данным статусом.</p>
+    }
+</section>

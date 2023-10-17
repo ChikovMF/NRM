@@ -1,0 +1,39 @@
+﻿@page
+@model NRM.Pages.AdminPanel.Place.IndexModel
+@{
+    ViewData["Title"] = "Список мест";
+}
+
+<main>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@ViewData["Title"]</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                <a class="btn btn-sm btn-outline-secondary" asp-page="Create">Добавление места</a>
+            </div>
+        </div>
+    </div>
+
+    @if(Model.Places != null && Model.Places.Count > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Место</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var place in Model.Places)
+                {
+                    <tr>
+                        <td><a asp-page="View" asp-route-id="@place.Id">@place.Name</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Список мест пуст.</p>
+    }
+</main>

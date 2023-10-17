@@ -1,0 +1,93 @@
+﻿@page
+@model NRM.Pages.AdminPanel.User.CreateModel
+@{
+    ViewData["Title"] = "Добавление пользователя";
+}
+
+<main class="col-md-7 col-lg-8">
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="Input.Login"></label><br />
+            <input class="form-control" asp-for="Input.Login" />
+            <span asp-validation-for="Input.Login" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.LastName"></label><br />
+            <input class="form-control" asp-for="Input.LastName" />
+            <span asp-validation-for="Input.LastName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.FirstName"></label><br />
+            <input class="form-control" asp-for="Input.FirstName" />
+            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.Patronymic"></label><br />
+            <input class="form-control" asp-for="Input.Patronymic" />
+            <span asp-validation-for="Input.Patronymic" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.PhoneNumber"></label><br />
+            <input class="form-control" asp-for="Input.PhoneNumber" />
+            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.Email"></label><br />
+            <input class="form-control" asp-for="Input.Email" />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.PlaceId"></label>
+            <select class="form-control" asp-for="Input.PlaceId" id="select-places">
+                <option></option>
+            </select>
+            <span asp-validation-for="Input.PlaceId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.Password"></label><br />
+            <input class="form-control" asp-for="Input.Password" />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.PasswordConfirm"></label><br />
+            <input class="form-control" asp-for="Input.PasswordConfirm" />
+            <span asp-validation-for="Input.PasswordConfirm" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.RoleId"></label>
+            <select class="form-control" asp-for="Input.RoleId" asp-items="Model.Input.RoleItems">
+            </select>
+            <span asp-validation-for="Input.RoleId" class="text-danger"></span>
+        </div>
+
+        <p>
+            <div>
+                <input class="btn btn-primary" type="submit" value="Добавить" />
+            </div>
+        </p>
+
+        <div asp-validation-summary="All"></div>
+    </form>
+</main>
+
+@section Styles {
+    <link rel="stylesheet" href="~/lib/select2/css/select2.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/select2/css/select2-bootstrap-5-theme.min.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    <script src="~/lib/select2/js/select2.min.js"></script>
+    <script src="~/lib/select2/js/ru.js"></script>
+    <script type="text/javascript" src="~/lib/select2/js/myObjects.js"></script>
+
+    <partial name="_ValidationScriptsPartial" />
+}

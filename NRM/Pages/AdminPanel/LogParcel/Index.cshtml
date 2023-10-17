@@ -1,0 +1,29 @@
+﻿@page
+@model NRM.Pages.AdminPanel.LogParcel.IndexModel
+@{
+    ViewData["Title"] = "Список логов посылок";
+}
+
+<section>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@ViewData["Title"]</h1>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Сообщение</th>
+                <th>Дата и время</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var log in Model.LogParcel)
+            {
+                <tr>
+                    <td><a asp-page="View" asp-route-id="@log.Id">@log.Message</a></td>
+                    <td>@log.Date.ToShortDateString() @log.Time.ToShortTimeString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>

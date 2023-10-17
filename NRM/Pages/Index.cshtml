@@ -1,0 +1,13 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Главная страница";
+}
+
+<form method="post">
+    <div class="input-group col-6">
+        <input type="text" class="form-control" placeholder="Трек-номер посылки" asp-for="TrackNumber">
+        <button class="btn btn-outline-secondary" type="submit">Искать</button>
+    </div>
+    <div asp-validation-summary="All"></div>
+</form>

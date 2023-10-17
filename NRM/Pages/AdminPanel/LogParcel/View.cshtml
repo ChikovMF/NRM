@@ -1,0 +1,31 @@
+﻿@page "{id:int}"
+@model NRM.Pages.AdminPanel.LogParcel.ViewModel
+@{
+    ViewData["Title"] = $"Лог посылки";
+}
+<section>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@ViewData["Title"]</h1>
+    </div>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Сообщение</td>
+                <td>@Model.LogParcel.Message</td>
+            </tr>
+            <tr>
+                <td>Дата и время</td>
+                <td>@Model.LogParcel.Date.ToShortDateString() @Model.LogParcel.Time.ToShortTimeString()</td>
+            </tr>
+            <tr>
+                <td>Тип лога</td>
+                <td><a asp-page="/AdminPanel/LogType/View" asp-route-id="@Model.LogParcel.Type.Id">@Model.LogParcel.Type.Name</a></></td>
+            </tr>
+            <tr>
+                <td>Пользователь совершивщий действие</td>
+                <td><a asp-page="/AdminPanel/User/View" asp-route-id="@Model.LogParcel.User.Id">@Model.LogParcel.User.FullName (@Model.LogParcel.User.Login)</a></td>
+            </tr>
+        </tbody>
+    </table>
+</section>

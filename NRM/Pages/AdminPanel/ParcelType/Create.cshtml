@@ -1,0 +1,31 @@
+﻿@page
+@model NRM.Pages.AdminPanel.ParcelType.CreateModel
+@{
+    ViewData["Title"] = "Добавление типа посылки";
+}
+
+<main class="col-md-7 col-lg-8">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@ViewData["Title"]</h1>
+    </div>
+
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="Input.Name"></label><br />
+            <input class="form-control" asp-for="Input.Name" />
+            <span asp-validation-for="Input.Name" class="text-danger"></span>
+        </div>
+
+        <p>
+            <div>
+                <input class="btn btn-primary" type="submit" value="Добавить" />
+            </div>
+        </p>
+
+        <div asp-validation-summary="All"></div>
+    </form>
+</main>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

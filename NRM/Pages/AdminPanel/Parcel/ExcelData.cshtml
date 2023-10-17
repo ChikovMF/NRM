@@ -1,0 +1,34 @@
+﻿@page
+@model NRM.Pages.AdminPanel.Parcel.ExcelDataModel
+@{
+    ViewData["Title"] = $"Создание посылок из Excel";
+}
+
+<main>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@ViewData["Title"]</h1>
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <input type="file" name="file" class="form-control form-control-sm" id="customFile">
+        </div>
+
+        <p>
+            <button type="submit" name="file" class="btn btn-sm btn-outline-secondary" id="castomFile">
+                <div id="spiner" class="d-none">
+                    <span class="spinner-border spinner-border-sm" role="status"></span>
+                    <span class="sr-only">Обработка...</span>
+                </div>
+                <span id="castomFileText">Отправить</span>
+            </button>
+        </p>
+    </form>
+</main>
+
+<script>
+    window.addEventListener('submit', function () {
+        $('#castomFileText').addClass('d-none');
+        $('#spiner').removeClass('d-none');
+    });
+</script>

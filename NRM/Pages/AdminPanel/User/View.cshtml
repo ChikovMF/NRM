@@ -1,0 +1,109 @@
+﻿@page "{id:int}"
+@model NRM.Pages.AdminPanel.User.ViewModel
+@{
+    ViewData["Title"] = $"Пользователь: {Model.User.Login}";
+}
+
+<main>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@ViewData["Title"]</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                <a class="btn btn-sm btn-outline-secondary" asp-page="Edit" asp-route-id="@Model.User.Id">Изменение пользователя</a>
+                <!-- Кнопка-триггер модального окна -->
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#statusModal">
+                    Смена пароля
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Удалить</button>
+            </div>
+        </div>
+    </div>
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <!-- Модальное окно -->
+    <div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Смена пароля пользователя</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label asp-for="Input.Password"></label><br />
+                            <input class="form-control" asp-for="Input.Password" />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Input.PasswordConfirm"></label><br />
+                            <input class="form-control" asp-for="Input.PasswordConfirm" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Логин</td>
+                <td>@Model.User.Login</td>
+            </tr>
+            <tr>
+                <td>ФИО</td>
+                <td>@($"{Model.User.LastName} {Model.User.FirstName} {Model.User.Patronymic}")</td>
+            </tr>
+            <tr>
+                <td>Почта</td>
+                <td>@Model.User.Email</td>
+            </tr>
+            <tr>
+                <td>Телефон</td>
+                <td>@Model.User.PhoneNumber</td>
+            </tr>
+            <tr>
+                <td>Роль:</td>
+                <td><a asp-page="/AdminPanel/Role/View" asp-route-id="@Model.User.Role.Id">@Model.User.Role.Name</a></td>
+            </tr>
+            @if(Model.User.Place != null)
+            {
+                <tr>
+                    <td>Место работы:</td>
+                    <td><a asp-page="/AdminPanel/Place/View" asp-route-id="@Model.User.Place.Id">@Model.User.Place.Name</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (Model.User.GroupParcels != null && Model.User.GroupParcels.Count > 0)
+    {
+        <table class="table">
+            <caption>Закрепленные групповые посылки</caption>
+            <thead>
+                <tr>
+                    <th>Трек-номер</th>
+                    <th>Статус</th>
+                    <th>Количество посылок</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var groupParcel in Model.User.GroupParcels)
+                {
+                    <tr>
+                        <td><a asp-page="/AdminPanel/GroupParcel/View" asp-route-id="@groupParcel.Id">@groupParcel.TrackNumber</a></td>
+                        <td>@groupParcel.Status</td>
+                        <td>@groupParcel.ParcelCount</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+</main>

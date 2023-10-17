@@ -1,0 +1,29 @@
+﻿@page
+@model NRM.Pages.AdminPanel.Role.IndexModel
+@{
+    ViewData["Title"] = "Список ролей";
+}
+
+<main>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@ViewData["Title"]</h1>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Название роли</th>
+                <th>Количество пользователей</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var role in Model.Roles)
+            {
+                <tr>
+                    <td><a asp-page="View" asp-route-id="@role.Id">@role.Name</a></td>
+                    <td>@role.NumberOfUsers</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</main>

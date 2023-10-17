@@ -1,0 +1,102 @@
+﻿@page "{id:int}"
+@model NRM.Pages.AdminPanel.Parcel.ViewModel
+@{
+    ViewData["Title"] = $"Посылка: {Model.Parcel.TrackNumber}";
+}
+
+<main>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@ViewData["Title"]</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                <!-- Кнопка-триггер модального окна -->
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#statusModal">
+                    Смена статуса
+                </button>
+                <a class="btn btn-sm btn-outline-secondary" asp-page="Edit" asp-route-id="@Model.Parcel.Id">Изменение пасылки</a>
+                <form method="post">
+                    <input type="submit" asp-page-handler="Delete" class="btn btn-sm btn-outline-secondary" value="Удалить">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно -->
+    <div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Смена статуса посылки</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label asp-for="Input.StatusId"></label>
+                            <select class="form-control form-control-sm" asp-for="Input.StatusId" asp-items="Model.Input.StatusItems"></select>
+                            <span asp-validation-for="Input.StatusId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Трек-номер</td>
+                <td>@Model.Parcel.TrackNumber</td>
+            </tr>
+            <tr>
+                <td>Дата и время создания</td>
+                <td>@($"{Model.Parcel.DepartureTime.ToShortTimeString()} {Model.Parcel.DepartureDate.ToShortDateString()}")</td>
+            </tr>
+            <tr>
+                <td>Отправитель</td>
+                <td>@Model.Parcel.Sender</td>
+            </tr>
+            <tr>
+                <td>Получатель</td>
+                <td>@Model.Parcel.Recipient</td>
+            </tr>
+            @if (Model.Parcel.GroupParcel != null)
+            {
+                <tr>
+                    <td>Групповая посылка</td>
+                    <td><a asp-page="/AdminPanel/GroupParcel/View" asp-route-id="@Model.Parcel.GroupParcel.Id">@Model.Parcel.GroupParcel.TrackNumber</a></td>
+                </tr>
+            }
+            <tr>
+                <td>Статус:</td>
+                <td><a asp-page="/AdminPanel/ParcelStatus/View" asp-route-id="@Model.Parcel.Status.Id">@Model.Parcel.Status.Name</a></td>
+            </tr>
+            <tr>
+                <td>Тип:</td>
+                <td><a asp-page="/AdminPanel/ParcelType/View" asp-route-id="@Model.Parcel.Type.Id">@Model.Parcel.Type.Name</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Тип лога</th>
+                <th>Сообщение</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var log in Model.Parcel.LogParcels)
+            {
+                <tr>
+                    <td>@log.Type</td>
+                    <td><a asp-page="/AdminPanel/LogParcel/View" asp-route-id="@log.Id">@log.Message</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</main>

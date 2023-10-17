@@ -1,0 +1,34 @@
+﻿@page
+@model NRM.Pages.AdminPanel.LogType.IndexModel
+@{
+    ViewData["Title"] = "Список типов логов";
+}
+
+<main>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@ViewData["Title"]</h1>
+    </div>
+
+    @if (Model.LogTypes != null && Model.LogTypes.Count > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Тип логов</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var type in Model.LogTypes)
+                {
+                    <tr>
+                        <td><a asp-page="View" asp-route-id="@type.Id">@type.Name</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Список пуст.</p>
+    }
+</main>

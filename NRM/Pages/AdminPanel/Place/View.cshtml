@@ -1,0 +1,72 @@
+﻿@page "{id:int}"
+@model NRM.Pages.AdminPanel.Place.ViewModel
+@{
+    ViewData["Title"] = $"Место: {Model.Place.Name}";
+}
+
+<main>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@ViewData["Title"]</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                <a class="btn btn-sm btn-outline-secondary" asp-page="Edit" asp-route-id="@Model.Place.Id">Изменение места</a>
+                <button type="button" class="btn btn-sm btn-outline-secondary">xУдалить</button>
+            </div>
+        </div>
+    </div>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Название</td>
+                <td>@Model.Place.Name</td>
+            </tr>
+        </tbody>
+    </table>
+
+    @if (Model.Place.GroupParcels != null && Model.Place.GroupParcels.Count > 0)
+    {
+        <table class="table">
+            <caption>Закрепленные групповые посылки</caption>
+            <thead>
+                <tr>
+                    <th>Трек-номер</th>
+                    <th>Статус</th>
+                    <th>Количество посылок</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var groupParcel in Model.Place.GroupParcels)
+                {
+                    <tr>
+                        <td><a asp-page="/AdminPanel/GroupParcel/View" asp-route-id="@groupParcel.Id">@groupParcel.TrackNumber</a></td>
+                        <td>@groupParcel.Status</td>
+                        <td>@groupParcel.ParcelCount</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    @if (Model.Place.Users != null && Model.Place.Users.Count > 0)
+    {
+        <table class="table">
+            <caption>Закрепленные пользователи</caption>
+            <thead>
+                <tr>
+                    <th>Логин</th>
+                    <th>ФИО</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model.Place.Users)
+                {
+                    <tr>
+                        <td><a asp-page="/AdminPanel/User/View" asp-route-id="@user.Id">@user.Login</a></td>
+                        <td>@user.FullName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</main>

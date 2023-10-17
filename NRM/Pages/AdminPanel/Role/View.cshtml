@@ -1,0 +1,30 @@
+﻿@page "{id:int}"
+@model NRM.Pages.AdminPanel.Role.ViewModel
+@{
+    ViewData["Title"] = $"Роль: {Model.Role.Name}";
+}
+
+<main>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@ViewData["Title"]</h1>
+    </div>
+
+    <table class="table">
+        <caption>Пользователи с данной ролью</caption>
+        <thead>
+            <tr>
+                <th>Логин пользователя</th>
+                <th>ФИО</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Role.Users)
+            {
+                <tr>
+                    <td><a asp-page="/AdminPanel/User/View" asp-route-id="@user.Id">@user.Login</a></td>
+                    <td>@user.FullName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</main>

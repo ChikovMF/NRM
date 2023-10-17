@@ -1,0 +1,61 @@
+﻿@page "{id:int}"
+@model NRM.Pages.AdminPanel.Parcel.EditModel
+@{
+    ViewData["Title"] = $"Редактирование посылки: {Model.Input.TrackNumber}";
+}
+
+<main>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@ViewData["Title"]</h1>
+    </div>
+
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="Input.Sender"></label>
+            <input class="form-control form-control-sm" asp-for="Input.Sender" />
+            <span asp-validation-for="Input.Sender" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.Recipient"></label>
+            <input class="form-control form-control-sm" asp-for="Input.Recipient" />
+            <span asp-validation-for="Input.Recipient" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.TypeId"></label>
+            <select class="form-control form-control-sm" asp-for="Input.TypeId" asp-items="Model.Input.TypeItems"></select>
+            <span asp-validation-for="Input.TypeId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.StatusId"></label>
+            <select class="form-control form-control-sm" asp-for="Input.StatusId" asp-items="Model.Input.StatusItems"></select>
+            <span asp-validation-for="Input.StatusId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.DepartureDate"></label>
+            <input class="form-control form-control-sm" asp-for="Input.DepartureDate" />
+            <span asp-validation-for="Input.DepartureDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.DepartureTime"></label>
+            <input class="form-control form-control-sm" asp-for="Input.DepartureTime" />
+            <span asp-validation-for="Input.DepartureTime" class="text-danger"></span>
+        </div>
+
+        <p>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Изменить</button>
+            </div>
+        </p>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    </form>
+</main>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

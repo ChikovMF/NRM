@@ -1,0 +1,97 @@
+﻿@page
+@model NRM.Pages.AdminPanel.Parcel.IndexModel
+@{
+    ViewData["Title"] = "Список посылок";
+}
+
+<main>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@ViewData["Title"]</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                <form method="post" asp-page="ExcelData" asp-page-handler="Export">
+                    <input class="btn btn-sm btn-outline-secondary" type="submit" value="Получить Excel" />
+                </form>
+                <a class="btn btn-sm btn-outline-secondary" asp-page="ExcelData">Передать Excel</a>
+                <a class="btn btn-sm btn-outline-secondary" asp-page="Create">Добавление посылки</a>
+            </div>
+        </div>
+    </div>
+
+    <form id="sort-filter-form" class="border-bottom" role="form" method="get">
+        <div class="row mb-2">
+            <div class="col-sm-3">
+                <label>Сортировать по</label>
+                <select asp-for="Options.OrderByOptions" name="OrderByOptions"
+                        asp-items="Html.GetEnumSelectList<Services.Queries.OrderByOptions>()"
+                        class="form-control sort-filter-width"
+                        onchange="ParcelList.sendForm(this);">
+                </select>
+            </div>
+
+            <div class="col-sm-3">
+                <label>Тип фильтра</label>
+                <select asp-for="Options.FilterBy" name="FilterBy"
+                        asp-items="Html.GetEnumSelectList<Services.Queries.ParcelsFilterBy>()"
+                        class="form-control sort-filter-width"
+                        onchange="ParcelList.filterByHasChanged(this)"></select>
+            </div>
+
+            <div class="col-sm-3 dim-filter-value" id="filter-value-group">
+                <label>Фильтрация по</label>
+                <select asp-for="Options.FilterValue" name="FilterValue"
+                        id="filter-value-dropdown"
+                        class="form-control sort-filter-width"
+                        disabled
+                        onchange="ParcelList.sendForm(this)">
+                    <option>Выберите тип фильтрации...</option>
+                </select>
+            </div>
+        </div>
+    </form>
+
+    @if (Model.Parcels != null && Model.Parcels.Count > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Трек-номер</th>
+                    <th>Тип посылки</th>
+                    <th>Отправитель</th>
+                    <th>Получатель</th>
+                    <th>Статус</th>
+                    <th>Дата и время</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var parcel in Model.Parcels)
+                {
+                    <tr>
+                        <td><a class="" asp-page="View" asp-route-id="@parcel.Id">@parcel.TrackNumber</a></td>
+                        <td>@parcel.Type</td>
+                        <td>@parcel.Sender</td>
+                        <td>@parcel.Recipient</td>
+                        <td>@parcel.Status</td>
+                        <td>@parcel.DateTime</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Список посылок пуст.</p>
+    }
+
+</main>
+
+@section Scripts{
+    <script src="~/js/parcelList.js" asp-append-version="true"></script>
+    <script type='text/javascript'>
+        document.addEventListener("DOMContentLoaded",
+            function (event) {
+                ParcelList.initialise('@Model.Options.FilterBy', '@Model.Options.FilterValue',
+                    '@Url.Page(String.Empty, pageHandler:"FilterSearchContent")');
+            });
+    </script>
+}
