@@ -9,7 +9,7 @@
         <ul class="flex-column list-unstyled">
             @if (User.IsInRole("Полный администратор") || User.IsInRole("Администратор посылок") || User.IsInRole("Пользователь"))
             {
-                <li><a asp-page="GroupParcel/Index">Групповая посылки</a></li>
+                <li><a asp-page="GroupParcel/Index">Групповые посылки</a></li>
                 <li><a asp-page="Parcel/Index">Посылки</a></li>
             }
             @if (User.IsInRole("Полный администратор") || User.IsInRole("Администратор пользователей"))
