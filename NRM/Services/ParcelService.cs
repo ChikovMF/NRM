@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NRM.Models.DataModels;
 using NRM.Models.ParcelModels;
 using NRM.Services.Queries;
 

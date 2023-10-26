@@ -83,6 +83,7 @@
     <script type="text/javascript" src="~/lib/select2/js/myObjects.js"></script>
 
     <script type="text/javascript">
+        $('#select-placeOfDeparture').append('<option value="@encoder.Encode(Model.Input.StartUser.PlaceId.ToString())" selected="selected">@encoder.Encode(Model.Input.StartUser.Place)</option>');
         $('#select-users').append('<option value="@encoder.Encode(Model.Input.StartUser.Id.ToString())" selected="selected">@encoder.Encode(Model.Input.StartUser.FullName)</option>');
         $('#select-users').trigger('change');
     </script>

@@ -35,6 +35,8 @@ namespace NRM.Models.GroupParcelModels
         {
             public int Id { get; set; }
             public string FullName { get; set; }
+            public string? Place { get; set; }
+            public int? PlaceId { get; set; }
         }
 
         public GroupParcel ToGroupParcel()

@@ -18,7 +18,7 @@ namespace NRM.Pages.AdminPanel.GroupParcel
 
         public async Task OnGet()
         {
-            GroupParcels = await _groupParcelService.GetGroupParcels();
+            GroupParcels = await _groupParcelService.GetGroupParcels(User.Identity.Name);
         }
 
         public async Task OnPostDelite(int id)

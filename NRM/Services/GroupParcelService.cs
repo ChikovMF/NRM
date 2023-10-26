@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NRM.Models.DataModels;
 using NRM.Models.GroupParcelModels;
+using NRM.Services.Queries;
 using System.Linq;
 
 namespace NRM.Services
@@ -102,9 +103,14 @@ namespace NRM.Services
         /// Получение списка групповых посылок.
         /// </summary>
         /// <returns>Список<TableModel> с групповыми посылками.</returns>
-        public async Task<List<TableModel>> GetGroupParcels()
+        public async Task<List<TableModel>> GetGroupParcels(string userLogin)
         {
-            return await _context.GroupParcels.Where(w => !w.IsDeleted)
+            User? user = _context.Users.FirstOrDefault(u => u.Login == userLogin);
+
+            if (user == null)
+                throw new NullReferenceException($"Пользователь запрашивающий список гр. посылок ({userLogin}) не найден.");
+
+            return await _context.GroupParcels.Where(w => !w.IsDeleted).GroupParcelFilterRole(user)
                 .OrderByDescending(o => o.DepartureDate).ThenByDescending(t => t.DepartureTime).Select(s => new TableModel
             {
                 Id = s.Id,
@@ -127,7 +133,9 @@ namespace NRM.Services
             return await _context.Users.Where(w => !w.IsDeleted && w.Login == login).Select(s => new CreateModel.StartUserItem()
             {
                 FullName = $"{s.LastName} {s.FirstName} {s.Patronymic} ({s.Login})",
-                Id = s.Id
+                Id = s.Id,
+                Place = s.Place.Name,
+                PlaceId = s.PlaceId
             }).FirstOrDefaultAsync();
         }
 
