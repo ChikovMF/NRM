@@ -6,6 +6,7 @@
         public bool IsDeleted { get; set; }
         public string Name { get; set; }
         
+        public ICollection<MilitaryUnit>? MilitaryUnits { get; set; }
         public List<User> Users { get; set; }
     }
 }

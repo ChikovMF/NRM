@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NRM.Models.DataModels;
 using NRM.Models.PlaceModels;
 
 namespace NRM.Services
@@ -70,6 +71,7 @@ namespace NRM.Services
                     Login = u.Login,
                     FullName = $"{u.LastName} {u.FirstName} {u.Patronymic}"
                 }).ToList(),
+                MilitaryUnits = s.MilitaryUnits.ToList(),
                 GroupParcels = _context.GroupParcels.Where(w => !w.IsDeleted && w.PlaceOfDeliveryId == id).Select(p => new ViewModel.ItemGroupParcel
                 {
                     Id= p.Id,
@@ -109,6 +111,23 @@ namespace NRM.Services
                 Name = s.Name
             }).FirstOrDefault();
             return place;
+        }
+
+        public async Task CreateMilitaryUnit(MilitaryUnit militaryUnit)
+        {
+            await _context.MilitaryUnits.AddAsync(militaryUnit);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteMilitaryUnit(int idMilitaryUnit)
+        {
+            var militaryUnit = await _context.MilitaryUnits.FirstOrDefaultAsync(mu => mu.Id == idMilitaryUnit);
+
+            if (militaryUnit != null)
+            {
+                _context.MilitaryUnits.Remove(militaryUnit);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

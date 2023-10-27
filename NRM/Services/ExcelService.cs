@@ -35,7 +35,9 @@ namespace NRM.Services
 
             List<Parcel> parcels = new List<Parcel>();
 
-            int userId = _context.Users.First(w => w.Login == login).Id;
+            var user = await _context.Users
+                .Include(u => u.Place)
+                .FirstAsync(w => w.Login == login);
 
             var DateNow = DateOnly.FromDateTime(DateTime.Now);
             var TimeNow = TimeOnly.FromDateTime(DateTime.Now);
@@ -57,7 +59,8 @@ namespace NRM.Services
                         TypeId = typeId,
                         DepartureDate = DateNow,
                         DepartureTime = TimeNow,
-                        StatusId = 1
+                        StatusId = 1,
+                        PlaceOfDepartureId = user.PlaceId
                     }.ToParcel();
 
                     parcel.LogParcels = new List<LogParcel>
@@ -68,10 +71,11 @@ namespace NRM.Services
                             TypeId = 6,
                             Date = DateNow,
                             Time = TimeNow,
-                            UserId = userId,
+                            UserId = user.Id,
                             Message = $"Создана посылка с трек-номером {parcel.TrackNumber}. " +
-                        $"Пользователь создавший посылку: {login}. " +
-                        $"Время создания: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
+                        $"Пользователь создавший посылку: {login}" +
+                        $"({user.Place?.Name})" +
+                        $". Время создания: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                         }
                     };
 

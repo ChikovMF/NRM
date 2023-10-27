@@ -1,4 +1,6 @@
-﻿namespace NRM.Models.PlaceModels
+﻿using NRM.Models.DataModels;
+
+namespace NRM.Models.PlaceModels
 {
     public class ViewModel
     {
@@ -6,6 +8,7 @@
         public string Name { get; set; }
         public List<ItemUser>? Users { get; set; }
         public List<ItemGroupParcel>? GroupParcels { get; set; }
+        public List<MilitaryUnit>? MilitaryUnits { get; set; }
 
         public class ItemUser
         {

@@ -9,8 +9,37 @@
         <h1 class="h2">@ViewData["Title"]</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
+                <!-- Кнопка-триггер модального окна -->
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#statusModal">
+                    Добавление в/ч
+                </button>
                 <a class="btn btn-sm btn-outline-secondary" asp-page="Edit" asp-route-id="@Model.Place.Id">Изменение места</a>
                 <button type="button" class="btn btn-sm btn-outline-secondary">xУдалить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно -->
+    <div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Добавление в/ч</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                    </div>
+                    <input type="hidden" name="militaryUnit.PlaceId" value="@Model.Place.Id" />
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Наименование в/ч:</label><br />
+                            <input class="form-control" type="text" name="militaryUnit.Name" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="submit" asp-page-handler="CreateMilitaryUnit" class="btn btn-primary">Добавить</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -23,6 +52,34 @@
             </tr>
         </tbody>
     </table>
+
+    @if (Model.Place.MilitaryUnits != null && Model.Place.MilitaryUnits.Count > 0)
+    {
+        <table class="table">
+            <caption>Список в/ч</caption>
+            <thead>
+                <tr>
+                    <th>Наименование</th>
+                    <th>Удаление</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var militaryUnit in Model.Place.MilitaryUnits)
+                {
+                    <tr>
+                        <td>@militaryUnit.Name</td>
+                        <td>
+                            <form method="post">
+                                <input type="hidden" name="idMilitaryUnit" value="@militaryUnit.Id">
+                                <input type="hidden" name="idPlace" value="@Model.Place.Id">
+                                <button type="submit" asp-page-handler="DeleteMilitaryUnit" class="btn btn-sm btn-outline-secondary">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 
     @if (Model.Place.GroupParcels != null && Model.Place.GroupParcels.Count > 0)
     {

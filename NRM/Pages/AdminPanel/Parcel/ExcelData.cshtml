@@ -1,7 +1,7 @@
 ﻿@page
 @model NRM.Pages.AdminPanel.Parcel.ExcelDataModel
 @{
-    ViewData["Title"] = $"Создание посылок из Excel";
+    ViewData["Title"] = $"Импорт отправлений из файла Excel";
 }
 
 <main>
@@ -13,14 +13,14 @@
         <div class="form-group">
             <input type="file" name="file" class="form-control form-control-sm" id="customFile">
         </div>
-
+        <br />
         <p>
             <button type="submit" name="file" class="btn btn-sm btn-outline-secondary" id="castomFile">
                 <div id="spiner" class="d-none">
                     <span class="spinner-border spinner-border-sm" role="status"></span>
                     <span class="sr-only">Обработка...</span>
                 </div>
-                <span id="castomFileText">Отправить</span>
+                <span id="castomFileText">Импорт</span>
             </button>
         </p>
     </form>
