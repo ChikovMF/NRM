@@ -37,6 +37,16 @@
                         .Distinct()
                         .OrderBy(p => p.Text)
                         .ToList();
+                case ParcelsFilterBy.ByPlaces:
+                    return _context.Places
+                        .Where(p => !p.IsDeleted).
+                        Select(p => new DropdownTuple
+                        {
+                            Text = p.Name,
+                            Value = p.Id.ToString()
+                        })
+                        .OrderBy(p => p.Text)
+                        .ToList();
                 default:
                     throw new ArgumentOutOfRangeException(nameof(filterBy), filterBy, null);
             }

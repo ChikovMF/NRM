@@ -8,6 +8,7 @@ namespace NRM.Services.Queries
         [Display(Name = "Без фильтра")] NoFilter = 0,
         [Display(Name = "По типу...")] ByTypes,
         [Display(Name = "По статусу...")] ByStatus,
+        [Display(Name = "По месту...")] ByPlaces,
     }
 
     public static class ParcelListDtoFilter
@@ -31,6 +32,11 @@ namespace NRM.Services.Queries
                     var filterStatus = int.Parse(filterValue);
                     return parcels.Where(x =>
                         x.StatusId == filterStatus);
+                case ParcelsFilterBy.ByPlaces:
+                    int filterPlaceId = int.Parse(filterValue);
+                    return parcels.Where(x =>
+                        x.PlaceOfDeliveryId == filterPlaceId ||
+                        x.PlaceOfDepartureId == filterPlaceId);
                 default:
                     throw new ArgumentOutOfRangeException
                         (nameof(filterBy), filterBy, null);
