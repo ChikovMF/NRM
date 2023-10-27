@@ -24,11 +24,18 @@ namespace NRM.Models.ParcelModels
             Display(Name = "Дата отправления"),
             Required(ErrorMessage = "Введите дату отправки")]
         public DateOnly DepartureDate { get; set; }
+        [Required(ErrorMessage = "Выберите место отправки"),
+            DisplayName("Место отправки")]
+        public int? PlaceOfDepartureId { get; set; }
+        [Required(ErrorMessage = "Выберите место доставки"),
+            DisplayName("Место доставки")]
+        public int? PlaceOfDeliveryId { get; set; }
         [DataType(DataType.Time),
             DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true),
             Display(Name = "Время отправления"),
             Required(ErrorMessage = "Введите время отправки")]
         public TimeOnly DepartureTime { get; set; }
+        public StartItems? StartItemsPlace { get; set; }
 
         public List<SelectListItem>? TypeItems { get; set; }
 
@@ -44,7 +51,15 @@ namespace NRM.Models.ParcelModels
                 TrackNumber = TrackNumber,
                 StatusId = 1,
                 IsDeleted = false,
+                PlaceOfDeliveryId = PlaceOfDeliveryId,
+                PlaceOfDepartureId = PlaceOfDepartureId,
             };
+        }
+
+        public class StartItems
+        {
+            public string? Place { get; set; }
+            public int? PlaceId { get; set; }
         }
     }
 }

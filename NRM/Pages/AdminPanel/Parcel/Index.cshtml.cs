@@ -24,7 +24,7 @@ namespace NRM.Pages.AdminPanel.Parcel
         public async Task OnGet()
         {
             if (Options == null) Options = new SortFilterParcelPageOptions();
-            Parcels = await _parcelService.GetParcels(Options);
+            Parcels = await _parcelService.GetParcels(Options, User.Identity.Name);
         }
 
         public JsonResult OnGetFilterSearchContent([FromServices]ParcelFilterDropdownService filterService)

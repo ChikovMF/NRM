@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NRM.Models.DataModels;
 using NRM.Models.ParcelModels;
+using NRM.Pages;
 using NRM.Services.Queries;
 
 namespace NRM.Services
@@ -59,9 +60,15 @@ namespace NRM.Services
         /// Получение списка посылок.
         /// </summary>
         /// <returns>Список<TableModel> с посылками.</returns>
-        public async Task<List<TableModel>> GetParcels(SortFilterParcelPageOptions options)
+        public async Task<List<TableModel>> GetParcels(SortFilterParcelPageOptions options, string? login)
         {
+            User? user = _context.Users.FirstOrDefault(u => u.Login == login);
+
+            if (user == null)
+                throw new NullReferenceException($"Пользователь запрашивающий список гр. посылок ({login}) не найден.");
+
             return await _context.Parcels.Where(w => !w.IsDeleted)
+                .ParcelFilterRole(user)
                 .OrderParcelBy(options.OrderByOptions)
                 .FilterParcelsBy(options.FilterBy, options.FilterValue)
                 .Select(s => new TableModel
@@ -300,6 +307,15 @@ namespace NRM.Services
                 return true;
             }
             return false;
+        }
+
+        public async Task<CreateModel.StartItems> GetStartItems(string? login)
+        {
+            return await _context.Users.Where(w => !w.IsDeleted && w.Login == login).Select(s => new Models.ParcelModels.CreateModel.StartItems()
+            {
+                Place = s.Place.Name,
+                PlaceId = s.PlaceId
+            }).FirstOrDefaultAsync();
         }
     }
 }

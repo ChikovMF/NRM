@@ -23,6 +23,7 @@ namespace NRM.Pages.AdminPanel.Parcel
             Input.DepartureDate = DateOnly.FromDateTime(DateTime.Now);
             Input.DepartureTime = TimeOnly.FromDateTime(DateTime.Now);
             Input.TrackNumber = _parcelService.RandomTrackNumber();
+            Input.StartItemsPlace = await _parcelService.GetStartItems(User.Identity?.Name);
         }
 
         public async Task<IActionResult> OnPost()
@@ -34,6 +35,7 @@ namespace NRM.Pages.AdminPanel.Parcel
                 else ModelState.AddModelError(String.Empty, "Ошибка создания посылки");
             }
             Input.TypeItems = await _parcelService.GetParcelTypesSelect();
+            Input.StartItemsPlace = await _parcelService.GetStartItems(User.Identity?.Name);
             return Page();
         }
     }

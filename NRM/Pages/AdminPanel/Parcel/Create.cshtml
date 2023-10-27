@@ -1,5 +1,6 @@
 ﻿@page
 @model NRM.Pages.AdminPanel.Parcel.CreateModel
+@inject System.Text.Encodings.Web.JavaScriptEncoder encoder;
 @{
     ViewData["Title"] = "Создание посылки";
 }
@@ -14,6 +15,20 @@
             <label asp-for="Input.TrackNumber"></label>
             <input class="form-control form-control-sm" asp-for="Input.TrackNumber" />
             <span asp-validation-for="Input.TrackNumber" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.PlaceOfDepartureId"></label>
+            <select class="form-control" asp-for="Input.PlaceOfDepartureId" id="select-placeOfDeparture">
+            </select>
+            <span asp-validation-for="Input.PlaceOfDepartureId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.PlaceOfDeliveryId"></label>
+            <select class="form-control" asp-for="Input.PlaceOfDeliveryId" id="select-placeOfDelivery">
+            </select>
+            <span asp-validation-for="Input.PlaceOfDeliveryId" class="text-danger"></span>
         </div>
 
         <div class="form-group">
@@ -56,6 +71,23 @@
     </form>
 </main>
 
+@section Styles {
+    <link rel="stylesheet" href="~/lib/select2/css/select2.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/select2/css/select2-bootstrap-5-theme.min.css" asp-append-version="true" />
+}
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script src="~/lib/select2/js/select2.min.js"></script>
+    <script src="~/lib/select2/js/ru.js"></script>
+    <script type="text/javascript" src="~/lib/select2/js/myObjects.js"></script>
+
+    @if (Model.Input.StartItemsPlace.PlaceId != null || Model.Input.StartItemsPlace.Place != null)
+    {
+        <script type="text/javascript">
+            $('#select-placeOfDeparture').append('<option value="@encoder.Encode(Model.Input.StartItemsPlace.PlaceId.ToString())" selected="selected">@encoder.Encode(Model.Input.StartItemsPlace.Place)</option>');
+        </script>
+    }
+
 }
