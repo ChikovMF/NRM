@@ -9,7 +9,7 @@ namespace NRM.Models.ParcelModels
     public class CreateModel
     {
         [Required(ErrorMessage = "Введите трек-номер"), DisplayName("Трек-номер"), 
-            StringLength(13, MinimumLength = 13, ErrorMessage = "Длина строки должна быть 13 символов")]
+            StringLength(14, MinimumLength = 14, ErrorMessage = "Длина строки должна быть 14 символов")]
         public string TrackNumber { get; set; }
         [Required(ErrorMessage = "Введите отправителя"), DisplayName("Отправитель")]
         public string Sender { get; set; }

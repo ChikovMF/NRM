@@ -7,7 +7,7 @@ namespace NRM.Models.GroupParcelModels
     public class CreateModel
     {
         [Required(ErrorMessage = "Введите трек-номер"), DisplayName("Трек-номер"), 
-            StringLength(13, MinimumLength = 13, ErrorMessage = "Длина строки должна быть 13 символов")]
+            StringLength(14, MinimumLength = 14, ErrorMessage = "Длина строки должна быть 14 символов")]
         public string TrackNumber { get; set; }
         [DataType(DataType.Date), 
             DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true), 

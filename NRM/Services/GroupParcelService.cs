@@ -83,7 +83,7 @@ namespace NRM.Services
         /// <returns>строку с трек-номером</returns>
         public string RandomTrackNumber()
         {
-            int sizeTN = 13;
+            int sizeTN = 14;
             string trackNumber = String.Empty;
             char[] letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
             Random random = new Random();

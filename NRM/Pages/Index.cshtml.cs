@@ -16,8 +16,7 @@ namespace NRM.Pages
         }
 
         [BindProperty,
-            Required(ErrorMessage = "Введите трек-номер"), DisplayName("Трек-номер"),
-            StringLength(13, MinimumLength = 13, ErrorMessage = "Длина трек-номера должна быть 13 символов")]
+            Required(ErrorMessage = "Введите трек-номер"), DisplayName("Трек-номер")]
         public string TrackNumber { get; set; }
 
         public void OnGet()
