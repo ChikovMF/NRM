@@ -27,7 +27,7 @@ namespace NRM.Models.GroupParcelModels
         [Required(ErrorMessage = "Введите ответственного"), 
             DisplayName("Ответственный")]
         public int UserId { get; set; }
-        [Required(ErrorMessage = "Выберите посылки"), DisplayName("Посылки")]
+        [Required(ErrorMessage = "Выберите РПО"), DisplayName("Список РПО")]
         public List<int> ParcelsId { get; set; }
         public StartUserItem? StartUser { get; set; }
 

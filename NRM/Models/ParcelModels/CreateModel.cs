@@ -15,9 +15,9 @@ namespace NRM.Models.ParcelModels
         public string Sender { get; set; }
         [Required(ErrorMessage = "Введите получателя"), DisplayName("Получатель")]
         public string Recipient { get; set; }
-        [Required(ErrorMessage = "Выберите тип посылки"), DisplayName("Тип посылки")]
+        [Required(ErrorMessage = "Выберите тип РПО"), DisplayName("Тип РПО")]
         public int TypeId { get; set; }
-        [DisplayName("Статус посылки")]
+        [DisplayName("Статус РПО")]
         public int? StatusId { get; set; }
         [DataType(DataType.Date),
             DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true),
@@ -36,7 +36,8 @@ namespace NRM.Models.ParcelModels
             Required(ErrorMessage = "Введите время отправки")]
         public TimeOnly DepartureTime { get; set; }
         public StartItems? StartItemsPlace { get; set; }
-        [DisplayName("В/ч доставки")]
+        [Required(ErrorMessage = "Выберите в/ч доставки"),
+            DisplayName("В/ч доставки")]
         public int? MilitaryUnitId { get; set; }
 
         public List<SelectListItem>? TypeItems { get; set; }

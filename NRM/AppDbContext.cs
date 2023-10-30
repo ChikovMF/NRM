@@ -183,12 +183,12 @@ namespace NRM
                 new RelationLogType
                 {
                     Id = 2,
-                    Name = "Посылки",
+                    Name = "РПО",
                 },
                 new RelationLogType
                 {
                     Id = 3,
-                    Name = "Групповые посылки",
+                    Name = "Группа РПО",
                 },
             });
             modelBuilder.Entity<LogType>().HasData(new LogType[]
@@ -196,19 +196,19 @@ namespace NRM
                 new LogType
                 {
                     Id = 1,
-                    Name = "Смена данных посылки",
+                    Name = "Смена данных РПО",
                     RelationId = 2,
                 },
                 new LogType
                 {
                     Id = 2,
-                    Name = "Смена данных групповой посылки",
+                    Name = "Смена данных группы РПО",
                     RelationId = 3,
                 },
                 new LogType
                 {
                     Id = 3,
-                    Name = "Смена данных родительской групповой посылки",
+                    Name = "Смена данных родительской группы РПО",
                     RelationId = 2,
                 },
                 new LogType
@@ -220,25 +220,25 @@ namespace NRM
                 new LogType
                 {
                     Id = 5,
-                    Name = "Добавление посылки в группу",
+                    Name = "Добавление РПО в группу",
                     RelationId = 2,
                 },
                 new LogType
                 {
                     Id = 6,
-                    Name = "Создание посылки",
+                    Name = "Создание РПО",
                     RelationId = 2,
                 },
                 new LogType
                 {
                     Id = 7,
-                    Name = "Создание групповой посылки",
+                    Name = "Создание группы РПО",
                     RelationId = 3,
                 },
                 new LogType
                 {
                     Id = 8,
-                    Name = "Смена статуса посылки",
+                    Name = "Смена статуса РПО",
                     RelationId = 2,
                 },
                 new LogType
@@ -250,7 +250,7 @@ namespace NRM
                 new LogType
                 {
                     Id = 10,
-                    Name = "Смена статуса из-за смены статуса родителя посылки",
+                    Name = "Смена статуса из-за смены статуса родителя РПО",
                     RelationId = 2,
                 }
             });

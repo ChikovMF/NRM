@@ -118,7 +118,7 @@ namespace NRM.Services
                     Id = s.Place.Id,
                     Name = s.Place.Name
                 },
-                GroupParcels = _context.GroupParcels.Where(w => !w.IsDeleted && w.PlaceOfDeliveryId == id).Select(p => new ViewModel.ItemGroupParcel
+                GroupParcels = s.GroupParcels.Where(w => !w.IsDeleted).Select(p => new ViewModel.ItemGroupParcel
                 {
                     Id = p.Id,
                     TrackNumber = p.TrackNumber,

@@ -1,7 +1,7 @@
 ﻿@page "{id:int}"
 @model NRM.Pages.AdminPanel.Parcel.ViewModel
 @{
-    ViewData["Title"] = $"Посылка: {Model.Parcel.TrackNumber}";
+    ViewData["Title"] = $"РПО: {Model.Parcel.TrackNumber}";
 }
 
 <main>
@@ -13,7 +13,7 @@
                 <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#statusModal">
                     Смена статуса
                 </button>
-                <a class="btn btn-sm btn-outline-secondary" asp-page="Edit" asp-route-id="@Model.Parcel.Id">Изменение посылки</a>
+                <a class="btn btn-sm btn-outline-secondary" asp-page="Edit" asp-route-id="@Model.Parcel.Id">Изменение РПО</a>
                 <form method="post">
                     <input type="submit" asp-page-handler="Delete" class="btn btn-sm btn-outline-secondary" value="Удалить">
                 </form>
@@ -27,7 +27,7 @@
             <div class="modal-content">
                 <form method="post">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Смена статуса посылки</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Смена статуса РПО</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                     </div>
                     <div class="modal-body">
@@ -69,8 +69,8 @@
                 <td>@Model.Parcel.PlaceOfDeparture</td>
             </tr>
             <tr>
-                <td>Место доставки</td>
-                <td>@Model.Parcel.PlaceOfDeliver</td>
+                <td>Место получения</td>
+                <td>@Model.Parcel.PlaceOfDelivery</td>
             </tr>
             <tr>
                 <td>В/ч получения</td>
@@ -79,7 +79,7 @@
             @if (Model.Parcel.GroupParcel != null)
             {
                 <tr>
-                    <td>Групповая посылка</td>
+                    <td>Группа РПО</td>
                     <td><a asp-page="/AdminPanel/GroupParcel/View" asp-route-id="@Model.Parcel.GroupParcel.Id">@Model.Parcel.GroupParcel.TrackNumber</a></td>
                 </tr>
             }

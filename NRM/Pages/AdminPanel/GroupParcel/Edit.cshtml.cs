@@ -27,7 +27,7 @@ namespace NRM.Pages.AdminPanel.GroupParcel
             {
                 bool b = await _groupParcelService.EditGroupParcel(Input, id, User.Identity.Name);
                 if (b) return RedirectToPage("View", new { id = id });
-                else ModelState.AddModelError(String.Empty, "Ошибка изменения групповой посылки");
+                else ModelState.AddModelError(String.Empty, "Ошибка изменения группы РПО");
             }
             return Page();
         }

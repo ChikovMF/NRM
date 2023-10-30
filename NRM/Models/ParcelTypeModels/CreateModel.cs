@@ -6,8 +6,8 @@ namespace NRM.Models.ParcelTypeModels
 {
     public class CreateModel
     {
-        [Display(Name = "Тип посылки"),
-            Required(ErrorMessage = "Введите тип посылки")]
+        [Display(Name = "Тип РПО"),
+            Required(ErrorMessage = "Введите тип РПО")]
         public string Name { get; set; }
 
         public ParcelType ToParcelType()

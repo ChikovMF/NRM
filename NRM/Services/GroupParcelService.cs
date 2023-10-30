@@ -38,7 +38,7 @@ namespace NRM.Services
                     Date = DateOnly.FromDateTime(DateTime.Now),
                     Time = TimeOnly.FromDateTime(DateTime.Now),
                     UserId = _context.Users.First(f => f.Login == login).Id,
-                    Message = $"Создана групповая посылка с трек-номером {groupParcel.TrackNumber}. Пользователь создавший посылку: {login}. Время создания: {DateOnly.FromDateTime(DateTime.Now)} {TimeOnly.FromDateTime(DateTime.Now)}"
+                    Message = $"Создана группа РПО с трек-номером {groupParcel.TrackNumber}. Пользователь создавший группу РПО: {login}. Время создания: {DateOnly.FromDateTime(DateTime.Now)} {TimeOnly.FromDateTime(DateTime.Now)}"
                 });
                 await _context.GroupParcels.AddAsync(groupParcel);
                 _context.SaveChanges();
@@ -108,7 +108,7 @@ namespace NRM.Services
             User? user = _context.Users.FirstOrDefault(u => u.Login == userLogin);
 
             if (user == null)
-                throw new NullReferenceException($"Пользователь запрашивающий список гр. посылок ({userLogin}) не найден.");
+                throw new NullReferenceException($"Пользователь запрашивающий список групп РПО ({userLogin}) не найден.");
 
             return await _context.GroupParcels.Where(w => !w.IsDeleted).GroupParcelFilterRole(user)
                 .OrderByDescending(o => o.DepartureDate).ThenByDescending(t => t.DepartureTime).Select(s => new TableModel
@@ -160,15 +160,15 @@ namespace NRM.Services
                     Message = l.Message,
                     Type = l.Type.Name
                 }).ToList(),
-                Parcels = s.Parcels.Where(p => !p.IsDeleted)
-                    .Select(p => new ViewModel.ParcelItem()
+                Parcels = s.Parcels.Where(w => !w.IsDeleted)
+                .Select(p => new ViewModel.ParcelItem()
                 {
                     Id = p.Id,
                     TrackNumber = p.TrackNumber,
                     Sender = p.Sender,
                     Recipient = p.Recipient,
-                    MilitaryUnit = (p.MilitaryUnit != null) ? $"В/ч {p.MilitaryUnit.Name}" : string.Empty,
-                    Type = new ViewModel.Item { Id = p.Type.Id, Name = p.Type.Name }
+                    Type = new ViewModel.Item { Id = p.Type.Id, Name = p.Type.Name },
+                    MilitaryUnit = (p.MilitaryUnit != null) ? $"В/ч {p.MilitaryUnit.Name}" : string.Empty
                 }).ToList(),
                 PlaceOfDelivery = new ViewModel.Item { Id = s.PlaceOfDelivery.Id, Name= s.PlaceOfDelivery.Name },
                 PlaceOfDeparture = new ViewModel.Item { Id = s.PlaceOfDeparture.Id, Name = s.PlaceOfDeparture.Name },
@@ -197,9 +197,9 @@ namespace NRM.Services
                     Date = DateOnly.FromDateTime(DateTime.Now),
                     Time = TimeOnly.FromDateTime(DateTime.Now),
                     UserId = _context.Users.First(f => f.Login == login).Id,
-                    Message = $"Удалена групповая посылка с трек-номером {groupParcel.TrackNumber}. " +
-                    $"Пользователь удаливший групповую посылку: {login}. " +
-                    $"Время удаления групповой посылки: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
+                    Message = $"Удалена группа РПО с трек-номером {groupParcel.TrackNumber}. " +
+                    $"Пользователь удаливший группу РПО: {login}. " +
+                    $"Время удаления группы РПО: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                 });
                 if(groupParcel.Parcels != null)
                 {
@@ -213,8 +213,8 @@ namespace NRM.Services
                             Date = DateOnly.FromDateTime(DateTime.Now),
                             Time = TimeOnly.FromDateTime(DateTime.Now),
                             UserId = _context.Users.First(f => f.Login == login).Id,
-                            Message = $"Удалена посылка с трек-номером {parcel.TrackNumber}. " +
-                            $"Пользователь удаливший посылку: {login}. " +
+                            Message = $"Удалена РПО с трек-номером {parcel.TrackNumber}. " +
+                            $"Пользователь удаливший РПО: {login}. " +
                             $"Время удаления: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                         });
                     }
@@ -272,8 +272,8 @@ namespace NRM.Services
                     Date = DateOnly.FromDateTime(DateTime.Now),
                     Time = TimeOnly.FromDateTime(DateTime.Now),
                     UserId = userId,
-                    Message = $"Изменение данных групповой посылки с трек-номером {groupParcel.TrackNumber}. " +
-                    $"Пользователь изменивший групповую посылку: {login}. " +
+                    Message = $"Изменение данных группы РПО с трек-номером {groupParcel.TrackNumber}. " +
+                    $"Пользователь изменивший группу РПО: {login}. " +
                     $"Время изменения: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                 });
 
@@ -343,8 +343,8 @@ namespace NRM.Services
                     Date = DateOnly.FromDateTime(DateTime.Now),
                     Time = TimeOnly.FromDateTime(DateTime.Now),
                     UserId = _context.Users.First(f => f.Login == login).Id,
-                    Message = $"Смена статуса групповой посылки с трек-номером {groupParcel.TrackNumber}. " +
-                        $"Пользователь сменивший статус групповой посылки: {login}. " +
+                    Message = $"Смена статуса группы РПО с трек-номером {groupParcel.TrackNumber}. " +
+                        $"Пользователь сменивший статус группы РПО: {login}. " +
                         $"Время смены статуса: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                 });
                 foreach(var parcel in groupParcel.Parcels)
@@ -357,8 +357,8 @@ namespace NRM.Services
                         Date = DateOnly.FromDateTime(DateTime.Now),
                         Time = TimeOnly.FromDateTime(DateTime.Now),
                         UserId = _context.Users.First(f => f.Login == login).Id,
-                        Message = $"Смена статуса посылки с трек-номером {groupParcel.TrackNumber}. " +
-                        $"Пользователь сменивший статус посылки: {login}. " +
+                        Message = $"Смена статуса РПО с трек-номером {groupParcel.TrackNumber}. " +
+                        $"Пользователь сменивший статус РПО: {login}. " +
                         $"Время смены статуса: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                     });
                 }

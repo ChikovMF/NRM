@@ -1,8 +1,6 @@
 using DocumentFormat.OpenXml.EMMA;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NRM.Models.DataModels;
 using NRM.Services;
@@ -39,7 +37,7 @@ namespace NRM.Pages.AdminPanel.Place
                 Place = await _placeService.ViewPlace(id);
                 return Page();
             }
-            return RedirectToPage("View", new { id = id });
+            return RedirectToPage("View", new { id = militaryUnit.PlaceId });
         }
 
         public async Task<IActionResult> OnPostDeleteMilitaryUnit(int idMilitaryUnit, int idPlace)

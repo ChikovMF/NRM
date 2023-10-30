@@ -72,8 +72,8 @@ namespace NRM.Services
                             Date = DateNow,
                             Time = TimeNow,
                             UserId = user.Id,
-                            Message = $"Создана посылка с трек-номером {parcel.TrackNumber}. " +
-                        $"Пользователь создавший посылку: {login}" +
+                            Message = $"Создана РПО с трек-номером {parcel.TrackNumber}. " +
+                        $"Пользователь создавший РПО: {login}" +
                         $"({user.Place?.Name})" +
                         $". Время создания: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                         }
@@ -108,7 +108,7 @@ namespace NRM.Services
                 "Статус",
                 "Отправитель",
                 "Получатель",
-                "Тип посылки",
+                "Тип РПО",
                 "Дата отправки"
             };
 

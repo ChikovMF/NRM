@@ -1,7 +1,7 @@
 ﻿@page "{id:int}"
 @model NRM.Pages.AdminPanel.GroupParcel.ViewModel
 @{
-    ViewData["Title"] = $"Групповая посылка: {Model.GroupParcel.TrackNumber}";
+    ViewData["Title"] = $"Группа РПО: {Model.GroupParcel.TrackNumber}";
 }
 
 <section>
@@ -27,7 +27,7 @@
             <div class="modal-content">
                 <form method="post">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Смена статуса групповой посылки</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Смена статуса группы РПО</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                     </div>
                     <div class="modal-body">
@@ -75,10 +75,10 @@
         <thead>
             <tr>
                 <th>Трек-номер</th>
-                <th>Тип посылки</th>
+                <th>Тип РПО</th>
                 <th>Отправитель</th>
                 <th>Получатель</th>
-                <th>В/ч доставки</th>
+                <th>В/ч получения</th>
             </tr>
         </thead>
         <tbody>

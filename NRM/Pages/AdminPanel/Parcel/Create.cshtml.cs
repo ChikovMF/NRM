@@ -32,7 +32,7 @@ namespace NRM.Pages.AdminPanel.Parcel
             {
                 bool b = await _parcelService.CreateParcel(Input, User.Identity.Name);
                 if (b) return RedirectToPage("Index");
-                else ModelState.AddModelError(String.Empty, "Ошибка создания посылки");
+                else ModelState.AddModelError(String.Empty, "Ошибка создания РПО");
             }
             Input.TypeItems = await _parcelService.GetParcelTypesSelect();
             Input.StartItemsPlace = await _parcelService.GetStartItems(User.Identity?.Name);

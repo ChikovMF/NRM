@@ -1,7 +1,7 @@
 ﻿@page
 @model NRM.Pages.AdminPanel.Parcel.IndexModel
 @{
-    ViewData["Title"] = "Список посылок";
+    ViewData["Title"] = "Список РПО";
 }
 
 <main>
@@ -13,7 +13,7 @@
                     <input class="btn btn-sm btn-outline-secondary" type="submit" value="Экспорт отправлений" />
                 </form>
                 <a class="btn btn-sm btn-outline-secondary" asp-page="ExcelData">Импорт отправлений</a>
-                <a class="btn btn-sm btn-outline-secondary" asp-page="Create">Добавление посылки</a>
+                <a class="btn btn-sm btn-outline-secondary" asp-page="Create">Добавление РПО</a>
             </div>
         </div>
     </div>
@@ -56,7 +56,7 @@
             <thead>
                 <tr>
                     <th>Трек-номер</th>
-                    <th>Тип посылки</th>
+                    <th>Тип РПО</th>
                     <th>Отправитель</th>
                     <th>Получатель</th>
                     <th>Статус</th>

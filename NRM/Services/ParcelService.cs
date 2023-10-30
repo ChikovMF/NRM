@@ -33,8 +33,8 @@ namespace NRM.Services
                     Date = DateOnly.FromDateTime(DateTime.Now),
                     Time = TimeOnly.FromDateTime(DateTime.Now),
                     UserId = _context.Users.First(f => f.Login == login).Id,
-                    Message = $"Создана посылка с трек-номером {parcel.TrackNumber}. " +
-                        $"Пользователь создавший посылку: {login}. " +
+                    Message = $"Создана РПО с трек-номером {parcel.TrackNumber}. " +
+                        $"Пользователь создавший РПО: {login}. " +
                         $"Время создания: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                 });
                 await _context.Parcels.AddAsync(parcel);
@@ -79,9 +79,9 @@ namespace NRM.Services
                 TrackNumber = s.TrackNumber,
                 Type = s.Type.Name,
                 Id = s.Id,
+                PlaceOfDelivery = s.PlaceOfDelivery.Name + ((s.MilitaryUnit != null) ? $" (в/ч {s.MilitaryUnit.Name})" : string.Empty),
                 DateTime = s.LogParcels.Where(w => w.TypeId == 6).Select(s => $"{s.Time.ToShortTimeString()} {s.Date.ToShortDateString()}").First(),
-                PlaceOfDelivery = s.PlaceOfDelivery.Name + ((s.MilitaryUnit != null) ? $" (в/ч {s.MilitaryUnit.Name})" : string.Empty)
-                }).ToListAsync();
+            }).ToListAsync();
         }
 
         /// <summary>
@@ -148,9 +148,9 @@ namespace NRM.Services
                 DepartureDate = s.DepartureDate,
                 DepartureTime = s.DepartureTime,
                 Sender = s.Sender,
-                PlaceOfDeliver = s.PlaceOfDelivery.Name,
-                PlaceOfDeparture = s.PlaceOfDeparture.Name,
                 Recipient = s.Recipient,
+                PlaceOfDeparture = s.PlaceOfDeparture.Name,
+                PlaceOfDelivery = s.PlaceOfDelivery.Name,
                 MilitaryUnit = s.MilitaryUnit.Name,
                 Status = new ViewModel.Item
                 {
@@ -216,8 +216,8 @@ namespace NRM.Services
                     Date = DateOnly.FromDateTime(DateTime.Now),
                     Time = TimeOnly.FromDateTime(DateTime.Now),
                     UserId = _context.Users.First(f => f.Login == login).Id,
-                    Message = $"Удалена посылка с трек-номером {parcel.TrackNumber}. " +
-                    $"Пользователь удаливший посылку: {login}. " +
+                    Message = $"Удалена РПО с трек-номером {parcel.TrackNumber}. " +
+                    $"Пользователь удаливший РПО: {login}. " +
                     $"Время удаления: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                 });
                 _context.SaveChanges();
@@ -243,8 +243,8 @@ namespace NRM.Services
                     Date = DateOnly.FromDateTime(DateTime.Now),
                     Time = TimeOnly.FromDateTime(DateTime.Now),
                     UserId = _context.Users.First(f => f.Login == login).Id,
-                    Message = $"Изменение данных посылки с трек-номером {parcel.TrackNumber}. " +
-                    $"Пользователь изменивший посылку: {login}. " +
+                    Message = $"Изменение данных РПО с трек-номером {parcel.TrackNumber}. " +
+                    $"Пользователь изменивший РПО: {login}. " +
                     $"Время изменения: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                 });
                 _context.SaveChanges();
@@ -303,8 +303,8 @@ namespace NRM.Services
                     Date = DateOnly.FromDateTime(DateTime.Now),
                     Time = TimeOnly.FromDateTime(DateTime.Now),
                     UserId = _context.Users.First(f => f.Login == login).Id,
-                    Message = $"Смена статуса посылки с трек-номером {parcel.TrackNumber}. " +
-                        $"Пользователь сменивший статус посылки: {login}. " +
+                    Message = $"Смена статуса РПО с трек-номером {parcel.TrackNumber}. " +
+                        $"Пользователь сменивший статус РПО: {login}. " +
                         $"Время смены статуса: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                 });
                 _context.SaveChanges();

@@ -28,7 +28,7 @@ namespace NRM.Pages.AdminPanel.ParcelStatus
             {
                 bool b = await _parcelStatusService.CreateParcelStatus(Input);
                 if (b) return RedirectToPage("Index");
-                else ModelState.AddModelError(String.Empty, "Ошибка создания статуса посылки");
+                else ModelState.AddModelError(String.Empty, "Ошибка создания статуса РПО");
             }
             return Page();
         }

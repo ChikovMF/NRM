@@ -43,7 +43,7 @@ namespace NRM.Pages.AdminPanel.Parcel
 
         public class InputModel
         {
-            [Display(Name = "Статус посылки"), Required(ErrorMessage = "Введите статус посылки")]
+            [Display(Name = "Статус РПО"), Required(ErrorMessage = "Введите статус РПО")]
             public int StatusId { get; set; }
             public List<SelectListItem>? StatusItems { get; set; }
         }

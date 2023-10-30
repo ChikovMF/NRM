@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     $("#select-parsels").select2({
         theme: 'bootstrap-5',
-        placeholder: "Выберите посылку",
+        placeholder: "Выберите РПО",
         language: "ru",
         minimumInputLength: 1,
         maximumInputLength: 13,

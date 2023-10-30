@@ -9,7 +9,7 @@ namespace NRM.Services.Queries
         [Display(Name = "Сортировка по...")] SimpleOrder = 0,
         [Display(Name = "Дате ↑")] ByDateTimeHighestFirst,
         [Display(Name = "Дате ↓")] ByDateTimeLowestFirst,
-        [Display(Name = "Типу посылки")] ByParcelType,
+        [Display(Name = "Типу РПО")] ByParcelType,
         [Display(Name = "Статусу")] ByParcelStatus,
     }
     public static class ParcelListDtoSort

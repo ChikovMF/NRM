@@ -6,8 +6,8 @@ namespace NRM.Models.ParcelStatusModels
 {
     public class CreateModel
     {
-        [Display(Name = "Статус посылки"),
-            Required(ErrorMessage = "Введите статус посылки")]
+        [Display(Name = "Статус РПО"),
+            Required(ErrorMessage = "Введите статус РПО")]
         public string Name { get; set; }
 
         public ParcelStatus ToParcelStatus()

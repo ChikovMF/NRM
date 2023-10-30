@@ -30,7 +30,7 @@ namespace NRM.Pages
             {
                 var id = await _parcelService.ExistenceCheck(TrackNumber);
                 if (id != 0) return RedirectToPage("Parcel", new { id = id });
-                else ModelState.AddModelError(String.Empty, $"Посылки с трек-номером \"{TrackNumber}\" не существует");
+                else ModelState.AddModelError(String.Empty, $"РПО с трек-номером \"{TrackNumber}\" не существует");
             }
             return Page();
         }
