@@ -124,4 +124,32 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
+
+    $("#select-militaryUnits").select2({
+        theme: 'bootstrap-5',
+        placeholder: "Выберите в/ч",
+        language: "ru",
+        minimumInputLength: 1,
+        multiple: false,
+        width: "100%",
+        ajax: {
+            url: '/Select2/MilitaryUnits',
+            dataType: 'json',
+            delay: 250,
+            width: 'resolve',
+            data: function (params) {
+                let placeId = $('#select-placeOfDelivery').val();
+                console.log(placeId);
+                return {
+                    term: params.term,
+                    placeId: placeId
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data.items
+                };
+            }
+        }
+    });
 });

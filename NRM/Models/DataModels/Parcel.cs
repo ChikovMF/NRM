@@ -16,6 +16,8 @@ namespace NRM.Models.DataModels
         public Place? PlaceOfDeparture { get; set; }
         public int? PlaceOfDeliveryId { get; set; }
         public Place? PlaceOfDelivery { get; set; }
+        public int? MilitaryUnitId { get; set; }
+        public MilitaryUnit MilitaryUnit { get; set; } = null!;
 
         public List<LogParcel>? LogParcels { get; set; }
     }

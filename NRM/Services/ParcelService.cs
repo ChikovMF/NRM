@@ -34,8 +34,8 @@ namespace NRM.Services
                     Time = TimeOnly.FromDateTime(DateTime.Now),
                     UserId = _context.Users.First(f => f.Login == login).Id,
                     Message = $"Создана посылка с трек-номером {parcel.TrackNumber}. " +
-                    $"Пользователь создавший посылку: {login}. " +
-                    $"Время создания: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
+                        $"Пользователь создавший посылку: {login}. " +
+                        $"Время создания: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                 });
                 await _context.Parcels.AddAsync(parcel);
                 _context.SaveChanges();
@@ -148,6 +148,7 @@ namespace NRM.Services
                 DepartureTime = s.DepartureTime,
                 Sender = s.Sender,
                 Recipient = s.Recipient,
+                MilitaryUnit = s.MilitaryUnit.Name,
                 Status = new ViewModel.Item
                 {
                     Id = s.Status.Id,

@@ -64,5 +64,24 @@ namespace NRM.Controllers
                 items = list
             });
         }
+
+        [HttpGet]
+        [Route("Select2/MilitaryUnits")]
+        public async Task<JsonResult> MilitaryUnits(string term, int placeId)
+        {
+            var list = await _context.MilitaryUnits
+                .Where(m => m.Name.Contains(term) && m.PlaceId == placeId)
+                .Select(s => new
+                {
+                    text = s.Name,
+                    id = s.Id.ToString(),
+                })
+                .ToListAsync();
+
+            return new JsonResult(new
+            {
+                items = list
+            });
+        }
     }
 }

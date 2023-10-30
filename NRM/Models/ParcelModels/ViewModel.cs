@@ -8,6 +8,7 @@ namespace NRM.Models.ParcelModels
         public string TrackNumber { get; set; }
         public string Sender { get; set; }
         public string Recipient { get; set; }
+        public string MilitaryUnit { get; set; } = null!;
         public DateOnly DepartureDate { get; set; }
         public TimeOnly DepartureTime { get; set; }
 
