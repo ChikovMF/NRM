@@ -130,7 +130,7 @@ namespace NRM.Services
 
         public async Task DeleteMilitaryUnit(int idMilitaryUnit)
         {
-            var militaryUnit = await _context.MilitaryUnits.FirstOrDefaultAsync(mu => mu.Id == idMilitaryUnit);
+            var militaryUnit = await _context.MilitaryUnits.Include(m => m.Parcels).FirstOrDefaultAsync(mu => mu.Id == idMilitaryUnit);
 
             if (militaryUnit != null)
             {
