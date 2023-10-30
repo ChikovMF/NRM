@@ -160,13 +160,14 @@ namespace NRM.Services
                     Message = l.Message,
                     Type = l.Type.Name
                 }).ToList(),
-                Parcels = _context.Parcels.Where(w => !w.IsDeleted && w.GroupParcelId == id)
-                .Select(p => new ViewModel.ParcelItem()
+                Parcels = s.Parcels.Where(p => !p.IsDeleted)
+                    .Select(p => new ViewModel.ParcelItem()
                 {
                     Id = p.Id,
                     TrackNumber = p.TrackNumber,
                     Sender = p.Sender,
                     Recipient = p.Recipient,
+                    MilitaryUnit = (p.MilitaryUnit != null) ? $"В/ч {p.MilitaryUnit.Name}" : string.Empty,
                     Type = new ViewModel.Item { Id = p.Type.Id, Name = p.Type.Name }
                 }).ToList(),
                 PlaceOfDelivery = new ViewModel.Item { Id = s.PlaceOfDelivery.Id, Name= s.PlaceOfDelivery.Name },

@@ -80,7 +80,8 @@ namespace NRM.Services
                 Type = s.Type.Name,
                 Id = s.Id,
                 DateTime = s.LogParcels.Where(w => w.TypeId == 6).Select(s => $"{s.Time.ToShortTimeString()} {s.Date.ToShortDateString()}").First(),
-            }).ToListAsync();
+                PlaceOfDelivery = s.PlaceOfDelivery.Name + ((s.MilitaryUnit != null) ? $" (в/ч {s.MilitaryUnit.Name})" : string.Empty)
+                }).ToListAsync();
         }
 
         /// <summary>
@@ -147,6 +148,8 @@ namespace NRM.Services
                 DepartureDate = s.DepartureDate,
                 DepartureTime = s.DepartureTime,
                 Sender = s.Sender,
+                PlaceOfDeliver = s.PlaceOfDelivery.Name,
+                PlaceOfDeparture = s.PlaceOfDeparture.Name,
                 Recipient = s.Recipient,
                 MilitaryUnit = s.MilitaryUnit.Name,
                 Status = new ViewModel.Item

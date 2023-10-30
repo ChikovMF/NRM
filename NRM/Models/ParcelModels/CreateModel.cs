@@ -36,8 +36,7 @@ namespace NRM.Models.ParcelModels
             Required(ErrorMessage = "Введите время отправки")]
         public TimeOnly DepartureTime { get; set; }
         public StartItems? StartItemsPlace { get; set; }
-        [Required(ErrorMessage = "Выберите в/ч доставки"),
-            DisplayName("В/ч доставки")]
+        [DisplayName("В/ч доставки")]
         public int? MilitaryUnitId { get; set; }
 
         public List<SelectListItem>? TypeItems { get; set; }

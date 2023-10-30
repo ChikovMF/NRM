@@ -30,6 +30,7 @@ namespace NRM.Models.GroupParcelModels
             public Item Type { get; set; }
             public string Sender { get; set; }
             public string Recipient { get; set; }
+            public string MilitaryUnit { get; set; }
         }
 
         public class ItemLogGroupParcels

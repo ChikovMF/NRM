@@ -78,6 +78,7 @@
                 <th>Тип посылки</th>
                 <th>Отправитель</th>
                 <th>Получатель</th>
+                <th>В/ч доставки</th>
             </tr>
         </thead>
         <tbody>
@@ -88,6 +89,7 @@
                     <td><a asp-page="/AdminPanel/ParcelType/View" asp-route-id="@parcel.Type.Id">@parcel.Type.Name</a></td>
                     <td>@parcel.Sender</td>
                     <td>@parcel.Recipient</td>
+                    <td>@parcel.MilitaryUnit</td>
                 </tr>
             }
         </tbody>

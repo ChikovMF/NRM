@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore;
 using NRM.Models.DataModels;
 using NRM.Models.PlaceModels;
 
@@ -113,10 +114,18 @@ namespace NRM.Services
             return place;
         }
 
-        public async Task CreateMilitaryUnit(MilitaryUnit militaryUnit)
+        public async Task<ModelError?> CreateMilitaryUnit(MilitaryUnit militaryUnit)
         {
+            var complianceCheck = await _context.MilitaryUnits.Include(m => m.Place).FirstOrDefaultAsync(m => m.Name == militaryUnit.Name);
+            if (complianceCheck != null)
+            {
+                return new ModelError($"В/ч {militaryUnit.Name} ({complianceCheck.Place.Name}) уже существует");
+            }
+
             await _context.MilitaryUnits.AddAsync(militaryUnit);
             await _context.SaveChangesAsync();
+
+            return null;
         }
 
         public async Task DeleteMilitaryUnit(int idMilitaryUnit)
