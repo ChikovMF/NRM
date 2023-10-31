@@ -334,6 +334,8 @@ namespace NRM.Services
         {
             var user = await _context.Users.AsNoTracking().Include(u => u.Place).FirstOrDefaultAsync(u => u.Login == login);
 
+            var status = await _context.ParcelStatus.FirstOrDefaultAsync(p => p.Id == statusId);
+
             var groupParcel = await _context.GroupParcels.Where(w => !w.IsDeleted && w.Id == parcelId)
                 .Include(i => i.LogGroupParcels).Include(i => i.Parcels).ThenInclude(t => t.LogParcels).FirstOrDefaultAsync();
 
@@ -346,8 +348,9 @@ namespace NRM.Services
                     TypeId = 9,
                     Date = DateOnly.FromDateTime(DateTime.Now),
                     Time = TimeOnly.FromDateTime(DateTime.Now),
-                    UserId = _context.Users.First(f => f.Login == login).Id,
+                    UserId = user.Id,
                     Message = $"Смена статуса группы РПО с трек-номером {groupParcel.TrackNumber}. " +
+                        $"Новый статус: {status.Name}. " +
                         $"Пользователь сменивший статус группы РПО: {login}. " +
                         ((user.Place == null) ? string.Empty : $"Место смены статуса: {user.Place.Name}. ") +
                         $"Время смены статуса: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
@@ -362,7 +365,8 @@ namespace NRM.Services
                         Date = DateOnly.FromDateTime(DateTime.Now),
                         Time = TimeOnly.FromDateTime(DateTime.Now),
                         UserId = _context.Users.First(f => f.Login == login).Id,
-                        Message = $"Смена статуса РПО с трек-номером {groupParcel.TrackNumber}. " +
+                        Message = $"Смена статуса РПО с трек-номером {parcel.TrackNumber}. " +
+                        $"Новый статус: {status.Name}. " +
                         $"Пользователь сменивший статус РПО: {login}. " +
                         $"Время смены статуса: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                     });

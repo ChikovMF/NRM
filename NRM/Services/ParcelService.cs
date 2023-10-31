@@ -319,6 +319,7 @@ namespace NRM.Services
                     Time = TimeOnly.FromDateTime(DateTime.Now),
                     UserId = _context.Users.First(f => f.Login == login).Id,
                     Message = $"Смена статуса РПО с трек-номером {parcel.TrackNumber}. " +
+                        $"Новый статус: {_context.ParcelStatus.FirstOrDefault(p => p.Id == statusId).Name}. " +
                         $"Пользователь сменивший статус РПО: {login}. " +
                         ((user.Place == null) ? string.Empty : $"Место смены статуса: {user.Place.Name}. ") +
                         $"Время смены статуса: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
