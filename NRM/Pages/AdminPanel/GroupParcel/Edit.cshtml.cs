@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NRM.Services;
 
 namespace NRM.Pages.AdminPanel.GroupParcel
 {
+    [Authorize(Roles = "Полный администратор")]
     public class EditModel : PageModel
     {
         private readonly GroupParcelService _groupParcelService;
