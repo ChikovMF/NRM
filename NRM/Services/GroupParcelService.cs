@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.EntityFrameworkCore;
 using NRM.Models.DataModels;
 using NRM.Models.GroupParcelModels;
 using NRM.Services.Queries;
@@ -331,8 +332,11 @@ namespace NRM.Services
         /// <returns>true - статус успешно сменен</returns>
         public async Task<bool> ChangeStatusGroupParcel(int statusId, int parcelId, string login)
         {
+            var user = await _context.Users.AsNoTracking().Include(u => u.Place).FirstOrDefaultAsync(u => u.Login == login);
+
             var groupParcel = await _context.GroupParcels.Where(w => !w.IsDeleted && w.Id == parcelId)
                 .Include(i => i.LogGroupParcels).Include(i => i.Parcels).ThenInclude(t => t.LogParcels).FirstOrDefaultAsync();
+
             if (groupParcel != null)
             {
                 groupParcel.StatusId = statusId;
@@ -345,6 +349,7 @@ namespace NRM.Services
                     UserId = _context.Users.First(f => f.Login == login).Id,
                     Message = $"Смена статуса группы РПО с трек-номером {groupParcel.TrackNumber}. " +
                         $"Пользователь сменивший статус группы РПО: {login}. " +
+                        ((user.Place == null) ? string.Empty : $"Место смены статуса: {user.Place.Name}. ") +
                         $"Время смены статуса: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                 });
                 foreach(var parcel in groupParcel.Parcels)

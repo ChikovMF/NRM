@@ -67,13 +67,13 @@ namespace NRM.Controllers
 
         [HttpGet]
         [Route("Select2/MilitaryUnits")]
-        public async Task<JsonResult> MilitaryUnits(string term, int placeId)
+        public async Task<JsonResult> MilitaryUnits(string term)
         {
             var list = await _context.MilitaryUnits
-                .Where(m => m.Name.Contains(term) && m.PlaceId == placeId)
+                .Where(m => m.Name.Contains(term))
                 .Select(s => new
                 {
-                    text = s.Name,
+                    text = s.Name + $" ({s.Place.Name})",
                     id = s.Id.ToString(),
                 })
                 .ToListAsync();

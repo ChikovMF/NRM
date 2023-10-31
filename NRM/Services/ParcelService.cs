@@ -25,6 +25,14 @@ namespace NRM.Services
             if (ParcelRepeatCheck(createModel.TrackNumber))
             {
                 var parcel = createModel.ToParcel();
+
+                var placeOfDeliveryId = await _context
+                    .MilitaryUnits
+                    .Where(m => m.Id == createModel.MilitaryUnitId)
+                    .Select(m => m.PlaceId).FirstAsync();
+
+                parcel.PlaceOfDeliveryId = placeOfDeliveryId;
+
                 parcel.LogParcels = new List<Models.DataModels.LogParcel>();
                 parcel.LogParcels.Add(new Models.DataModels.LogParcel
                 {
@@ -292,6 +300,13 @@ namespace NRM.Services
         /// <returns>true - статус успешно сменен</returns>
         public async Task<bool> ChangeStatusParcel(int statusId,int placeId, string login)
         {
+            var user = await _context.Users.AsNoTracking().Include(u => u.Place).FirstOrDefaultAsync(u => u.Login == login);
+
+            if (user == null)
+            {
+                throw new NullReferenceException("Пользователь запрашивающий смену статуса не найден");
+            }
+
             var parcel = await _context.Parcels.Where(w => !w.IsDeleted && w.Id == placeId).Include(i => i.LogParcels).FirstOrDefaultAsync();
             if(parcel != null)
             {
@@ -305,6 +320,7 @@ namespace NRM.Services
                     UserId = _context.Users.First(f => f.Login == login).Id,
                     Message = $"Смена статуса РПО с трек-номером {parcel.TrackNumber}. " +
                         $"Пользователь сменивший статус РПО: {login}. " +
+                        ((user.Place == null) ? string.Empty : $"Место смены статуса: {user.Place.Name}. ") +
                         $"Время смены статуса: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                 });
                 _context.SaveChanges();

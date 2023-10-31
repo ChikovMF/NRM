@@ -24,14 +24,14 @@
             <span asp-validation-for="Input.PlaceOfDepartureId" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
+        @* <div class="form-group">
             <label asp-for="Input.PlaceOfDeliveryId"></label>
             <select class="form-control" asp-for="Input.PlaceOfDeliveryId" id="select-placeOfDelivery" onchange="selectPlaceChangeValue(this);">
             </select>
             <span asp-validation-for="Input.PlaceOfDeliveryId" class="text-danger"></span>
-        </div>
+        </div> *@
 
-        <div class="form-group d-none" id="divMilitaryUnits">
+        <div class="form-group" id="divMilitaryUnits">
             <label asp-for="Input.MilitaryUnitId"></label>
             <select class="form-control" asp-for="Input.MilitaryUnitId" id="select-militaryUnits">
             </select>
@@ -85,20 +85,6 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-
-    <script>
-        function selectPlaceChangeValue(select)
-        {
-            parcelId = select.value;
-
-            if (parcelId === undefined) {
-                $('#divMilitaryUnits').addClass('d-none');
-            }
-            else {
-                $('#divMilitaryUnits').removeClass('d-none');
-            }
-        }
-    </script>
 
     <script src="~/lib/select2/js/select2.min.js"></script>
     <script src="~/lib/select2/js/ru.js"></script>

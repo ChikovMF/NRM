@@ -27,9 +27,9 @@ namespace NRM.Models.ParcelModels
         [Required(ErrorMessage = "Выберите место отправки"),
             DisplayName("Место отправки")]
         public int? PlaceOfDepartureId { get; set; }
-        [Required(ErrorMessage = "Выберите место доставки"),
-            DisplayName("Место доставки")]
-        public int? PlaceOfDeliveryId { get; set; }
+        //[Required(ErrorMessage = "Выберите место доставки"),
+        //    DisplayName("Место доставки")]
+        //public int? PlaceOfDeliveryId { get; set; }
         [DataType(DataType.Time),
             DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true),
             Display(Name = "Время отправления"),
@@ -54,7 +54,7 @@ namespace NRM.Models.ParcelModels
                 TrackNumber = TrackNumber,
                 StatusId = 1,
                 IsDeleted = false,
-                PlaceOfDeliveryId = PlaceOfDeliveryId,
+                // PlaceOfDeliveryId = PlaceOfDeliveryId,
                 PlaceOfDepartureId = PlaceOfDepartureId,
                 MilitaryUnitId = MilitaryUnitId,
             };

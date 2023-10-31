@@ -138,11 +138,8 @@ document.addEventListener('DOMContentLoaded', function () {
             delay: 250,
             width: 'resolve',
             data: function (params) {
-                let placeId = $('#select-placeOfDelivery').val();
-                console.log(placeId);
                 return {
-                    term: params.term,
-                    placeId: placeId
+                    term: params.term
                 };
             },
             processResults: function (data) {
