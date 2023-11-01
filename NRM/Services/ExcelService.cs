@@ -74,7 +74,7 @@ namespace NRM.Services
                             UserId = user.Id,
                             Message = $"Создана РПО с трек-номером {parcel.TrackNumber}. " +
                         $"Пользователь создавший РПО: {login}" +
-                        $"({user.Place?.Name})" +
+                        ((user.Place == null) ? string.Empty : $"Место создания РПО: {user.Place.Name}. ") +
                         $". Время создания: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                         }
                     };

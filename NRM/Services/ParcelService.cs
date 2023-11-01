@@ -26,6 +26,8 @@ namespace NRM.Services
             {
                 var parcel = createModel.ToParcel();
 
+                var user = await _context.Users.AsNoTracking().Include(u => u.Place).FirstOrDefaultAsync(u => u.Login == login);
+
                 var placeOfDeliveryId = await _context
                     .MilitaryUnits
                     .Where(m => m.Id == createModel.MilitaryUnitId)
@@ -43,6 +45,7 @@ namespace NRM.Services
                     UserId = _context.Users.First(f => f.Login == login).Id,
                     Message = $"Создана РПО с трек-номером {parcel.TrackNumber}. " +
                         $"Пользователь создавший РПО: {login}. " +
+                        ((user.Place == null) ? string.Empty : $"Место создания РПО: {user.Place.Name}. ") +
                         $"Время создания: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                 });
                 await _context.Parcels.AddAsync(parcel);

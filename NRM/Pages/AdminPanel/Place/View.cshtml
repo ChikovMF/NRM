@@ -14,7 +14,9 @@
                     Добавление в/ч
                 </button>
                 <a class="btn btn-sm btn-outline-secondary" asp-page="Edit" asp-route-id="@Model.Place.Id">Изменение места</a>
-                <button type="button" class="btn btn-sm btn-outline-secondary">xУдалить</button>
+                <form method="post">
+                    <input type="submit" asp-page-handler="Delete" class="btn btn-sm btn-outline-secondary" value="Удалить">
+                </form>
             </div>
         </div>
     </div>

@@ -46,5 +46,11 @@ namespace NRM.Pages.AdminPanel.Place
 
             return RedirectToPage("View", new { id = idPlace });
         }
+
+        public async Task<IActionResult> OnPostDelete(int id)
+        {
+            await _placeService.DeletePlace(id, User.Identity.Name);
+            return RedirectToPage("Index");
+        }
     }
 }

@@ -25,6 +25,8 @@ namespace NRM.Services
         {
             if (GroupParcelRepeatCheck(createModel.TrackNumber))
             {
+                var user = await _context.Users.AsNoTracking().Include(u => u.Place).FirstOrDefaultAsync(u => u.Login == login);
+
                 var groupParcel = createModel.ToGroupParcel();
                 groupParcel.Parcels = new();
                 foreach(int id in createModel.ParcelsId)
@@ -39,7 +41,10 @@ namespace NRM.Services
                     Date = DateOnly.FromDateTime(DateTime.Now),
                     Time = TimeOnly.FromDateTime(DateTime.Now),
                     UserId = _context.Users.First(f => f.Login == login).Id,
-                    Message = $"Создана группа РПО с трек-номером {groupParcel.TrackNumber}. Пользователь создавший группу РПО: {login}. Время создания: {DateOnly.FromDateTime(DateTime.Now)} {TimeOnly.FromDateTime(DateTime.Now)}"
+                    Message = $"Создана группа РПО с трек-номером {groupParcel.TrackNumber}. " +
+                    $"Пользователь создавший группу РПО: {login}. " +
+                    ((user.Place == null) ? string.Empty : $"Место создания группы РПО: {user.Place.Name}. ") +
+                    $"Время создания: {DateOnly.FromDateTime(DateTime.Now)} {TimeOnly.FromDateTime(DateTime.Now)}"
                 });
                 await _context.GroupParcels.AddAsync(groupParcel);
                 _context.SaveChanges();

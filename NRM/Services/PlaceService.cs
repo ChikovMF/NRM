@@ -138,5 +138,22 @@ namespace NRM.Services
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task DeletePlace(int id, string login)
+        {
+            var parcel = await _context.Places
+                .Include(p => p.MilitaryUnits)
+                .Include(p => p.Users)
+                .Where(w => !w.IsDeleted && w.Id == id)
+                .FirstOrDefaultAsync();
+            if (parcel != null)
+            {
+                parcel.IsDeleted = true;
+
+                parcel.Users = new List<User>();
+
+                _context.SaveChanges();
+            }
+        }
     }
 }
