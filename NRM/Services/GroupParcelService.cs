@@ -368,6 +368,7 @@ namespace NRM.Services
                         Message = $"Смена статуса РПО с трек-номером {parcel.TrackNumber}. " +
                         $"Новый статус: {status.Name}. " +
                         $"Пользователь сменивший статус РПО: {login}. " +
+                        ((user.Place == null) ? string.Empty : $"Место смены статуса: {user.Place.Name}. ") +
                         $"Время смены статуса: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                     });
                 }
