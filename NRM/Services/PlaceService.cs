@@ -141,16 +141,16 @@ namespace NRM.Services
 
         public async Task DeletePlace(int id, string login)
         {
-            var parcel = await _context.Places
+            var place = await _context.Places
                 .Include(p => p.MilitaryUnits)
                 .Include(p => p.Users)
                 .Where(w => !w.IsDeleted && w.Id == id)
                 .FirstOrDefaultAsync();
-            if (parcel != null)
+            if (place != null)
             {
-                parcel.IsDeleted = true;
+                place.IsDeleted = true;
 
-                parcel.Users = new List<User>();
+                place.Users = new List<User>();
 
                 _context.SaveChanges();
             }

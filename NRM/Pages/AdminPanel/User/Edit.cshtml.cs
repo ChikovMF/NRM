@@ -28,7 +28,7 @@ namespace NRM.Pages.AdminPanel.User
             {
                 bool b = await _authorizationService.EditUser(Input, id);
                 if (b) return RedirectToPage("View", new { id = id });
-                else ModelState.AddModelError(String.Empty, "Ошибка изменения пользователя");
+                else ModelState.AddModelError(String.Empty, "РћС€РёР±РєР° РёР·РјРµРЅРµРЅРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ");
             }
             return Page();
         }

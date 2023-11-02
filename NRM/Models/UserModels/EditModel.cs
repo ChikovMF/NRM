@@ -9,9 +9,8 @@ namespace NRM.Models.UserModels
     {
         public string? Login { get; set; }
         [Display(Name = "Номер телефона"),
-            Required(ErrorMessage = "Введите номер телефона"),
-            RegularExpression("^((\\+7|7|8)+([0-9]){10})$", ErrorMessage = "Неверный формат номера телефона")]
-        public string PhoneNumber { get; set; }
+            RegularExpression("^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{4,10}$", ErrorMessage = "Неверный формат номера телефона")]
+        public string? PhoneNumber { get; set; }
         [Display(Name = "Электронная почта"),
             EmailAddress()]
         public string? Email { get; set; }
