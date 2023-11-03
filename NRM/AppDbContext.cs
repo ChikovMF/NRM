@@ -252,6 +252,18 @@ namespace NRM
                     Id = 10,
                     Name = "Смена статуса из-за смены статуса родителя РПО",
                     RelationId = 2,
+                },
+                new LogType
+                {
+                    Id = 11,
+                    Name = "Удаление места отправки/доставки РПО",
+                    RelationId = 2,
+                },
+                new LogType
+                {
+                    Id = 12,
+                    Name = "Удаление места отправки/доставки группы РПО",
+                    RelationId = 3,
                 }
             });
         }

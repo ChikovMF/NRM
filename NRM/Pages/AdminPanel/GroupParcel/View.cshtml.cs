@@ -29,8 +29,7 @@ namespace NRM.Pages.AdminPanel.GroupParcel
         public async Task<IActionResult> OnPost(int id)
         {
             bool b = await _groupParcelService.ChangeStatusGroupParcel(Input.StatusId, id, User.Identity.Name);
-            if (b) { ModelState.AddModelError(String.Empty, "Статус успешно сменен"); }
-            else ModelState.AddModelError(String.Empty, "Ошибка смены статуса");
+            if (!b) ModelState.AddModelError(String.Empty, "РћС€РёР±РєР° СЃРјРµРЅС‹ СЃС‚Р°С‚СѓСЃР°");
             GroupParcel = await _groupParcelService.ViewGroupParcel(id);
             Input.StatusItems = await _groupParcelService.GetGroupParcelStatusSelect();
             return Page();
@@ -44,7 +43,7 @@ namespace NRM.Pages.AdminPanel.GroupParcel
 
         public class InputModel
         {
-            [Display(Name = "Статус РПО"), Required(ErrorMessage = "Введите статус РПО")]
+            [Display(Name = "РЎС‚Р°С‚СѓСЃ РіСЂСѓРїРїС‹ Р РџРћ"), Required(ErrorMessage = "Р’С‹Р±РµСЂРёС‚Рµ СЃС‚Р°С‚СѓСЃ РіСЂСѓРїРїС‹ Р РџРћ")]
             public int StatusId { get; set; }
             public List<SelectListItem>? StatusItems { get; set; }
         }

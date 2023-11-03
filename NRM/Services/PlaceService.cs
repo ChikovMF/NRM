@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Irony.Parsing;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using NRM.Models.DataModels;
 using NRM.Models.PlaceModels;
@@ -75,7 +77,7 @@ namespace NRM.Services
                 MilitaryUnits = s.MilitaryUnits.ToList(),
                 GroupParcels = _context.GroupParcels.Where(w => !w.IsDeleted && w.PlaceOfDeliveryId == id).Select(p => new ViewModel.ItemGroupParcel
                 {
-                    Id= p.Id,
+                    Id = p.Id,
                     TrackNumber = p.TrackNumber,
                     Status = p.Status.Name,
                     ParcelCount = p.Parcels.Count
@@ -128,12 +130,30 @@ namespace NRM.Services
             return null;
         }
 
-        public async Task DeleteMilitaryUnit(int idMilitaryUnit)
+        public async Task DeleteMilitaryUnit(int idMilitaryUnit, string login)
         {
-            var militaryUnit = await _context.MilitaryUnits.Include(m => m.Parcels).FirstOrDefaultAsync(mu => mu.Id == idMilitaryUnit);
+            var militaryUnit = await _context.MilitaryUnits.Include(m => m.Parcels)
+                .ThenInclude(p => p.LogParcels)
+                .FirstOrDefaultAsync(mu => mu.Id == idMilitaryUnit);
 
             if (militaryUnit != null)
             {
+                if (militaryUnit.Parcels != null)
+                    foreach (var parcel in militaryUnit.Parcels)
+                    {
+                        parcel.LogParcels.Add(new LogParcel
+                        {
+                            Parcel = parcel,
+                            TypeId = 11,
+                            Date = DateOnly.FromDateTime(DateTime.Now),
+                            Time = TimeOnly.FromDateTime(DateTime.Now),
+                            UserId = _context.Users.First(f => f.Login == login).Id,
+                            Message = $"Удалено в/ч доставки ({militaryUnit.Name}) РПО с трек-номером {parcel.TrackNumber}. " +
+                                $"Пользователь удаливший РПО: {login}. " +
+                                $"Время удаления: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
+                        });
+                    }
+
                 _context.MilitaryUnits.Remove(militaryUnit);
                 await _context.SaveChangesAsync();
             }
@@ -143,12 +163,97 @@ namespace NRM.Services
         {
             var place = await _context.Places
                 .Include(p => p.MilitaryUnits)
+                    .ThenInclude(m => m.Parcels)
+                        .ThenInclude(p => p.LogParcels)
                 .Include(p => p.Users)
                 .Where(w => !w.IsDeleted && w.Id == id)
                 .FirstOrDefaultAsync();
+
             if (place != null)
             {
-                place.IsDeleted = true;
+                if (place.MilitaryUnits != null)
+                {
+                    foreach (var militaryUnit in place.MilitaryUnits)
+                    {
+                        if (militaryUnit.Parcels != null)
+                        {
+                            foreach (var parcel in militaryUnit.Parcels)
+                            {
+                                string message = "";
+
+                                if (parcel.PlaceOfDeliveryId == id)
+                                {
+                                    message = $"Удалено место доставки ({place.Name}) РПО с трек-номером {parcel.TrackNumber}. ";
+                                    parcel.PlaceOfDeliveryId = null;
+                                    place.MilitaryUnits = null;
+                                }
+                                else if (parcel.PlaceOfDepartureId == id)
+                                {
+                                    message = $"Удалено место отправки ({place.Name}) РПО с трек-номером {parcel.TrackNumber}. ";
+                                    parcel.PlaceOfDepartureId = null;
+                                }
+                                else
+                                {
+                                    throw new Exception($"РПО с трек-номеров {parcel.TrackNumber} не была связанна с удаляемым местом.");
+                                }
+
+                                parcel.LogParcels.Add(new LogParcel
+                                {
+                                    Parcel = parcel,
+                                    TypeId = 11,
+                                    Date = DateOnly.FromDateTime(DateTime.Now),
+                                    Time = TimeOnly.FromDateTime(DateTime.Now),
+                                    UserId = _context.Users.First(f => f.Login == login).Id,
+                                    Message = message +
+                                    $"Пользователь удаливший РПО: {login}. " +
+                                    $"Время удаления: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
+                                });
+                            }
+                        }
+                    }
+                }
+
+                var groupParcels = await _context.GroupParcels
+                    .Include(g => g.LogGroupParcels)
+                    .Where(g => g.PlaceOfDeliveryId == id || g.PlaceOfDepartureId == id)
+                    .ToListAsync();
+
+                if (groupParcels != null)
+                {
+                    foreach (var groupParcel in groupParcels)
+                    {
+                        string message = "";
+
+                        if (groupParcel.PlaceOfDeliveryId == id)
+                        {
+                            message = $"Удалено место доставки ({place.Name}) группы РПО с трек-номером {groupParcel.TrackNumber}. ";
+                            groupParcel.PlaceOfDeliveryId = null;
+                        }
+                        else if (groupParcel.PlaceOfDepartureId == id)
+                        {
+                            message = $"Удалено место отправки ({place.Name}) группы РПО с трек-номером {groupParcel.TrackNumber}. ";
+                            groupParcel.PlaceOfDepartureId = null;
+                        }
+                        else
+                        {
+                            throw new Exception($"Группа РПО с трек-номеров {groupParcel.TrackNumber} не была связанна с удаляемым местом.");
+                        }
+
+                        groupParcel.LogGroupParcels.Add(new LogGroupParcel
+                        {
+                            GroupParcel = groupParcel,
+                            TypeId = 12,
+                            Date = DateOnly.FromDateTime(DateTime.Now),
+                            Time = TimeOnly.FromDateTime(DateTime.Now),
+                            UserId = _context.Users.First(f => f.Login == login).Id,
+                            Message = message +
+                            $"Пользователь удаливший РПО: {login}. " +
+                            $"Время удаления: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
+                        });
+                    }
+                }
+
+                _context.Places.Remove(place);
 
                 place.Users = new List<User>();
 

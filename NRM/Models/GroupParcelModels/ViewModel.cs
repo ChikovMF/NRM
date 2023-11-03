@@ -19,8 +19,8 @@ namespace NRM.Models.GroupParcelModels
 
         public class Item
         {
-            public int Id { get; set; }
-            public string Name { get; set; }
+            public int? Id { get; set; }
+            public string? Name { get; set; }
         }
 
         public class ParcelItem

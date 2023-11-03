@@ -27,7 +27,7 @@ namespace NRM.Pages.AdminPanel.Place
             {
                 bool b = await _placeService.EditPlace(Input, id, User.Identity.Name);
                 if (b) return RedirectToPage("View", new { id = id });
-                else ModelState.AddModelError(String.Empty, "Ошибка изменения места");
+                else ModelState.AddModelError(String.Empty, "РћС€РёР±РєР° РёР·РјРµРЅРµРЅРёСЏ РјРµСЃС‚Р°");
             }
             return Page();
         }

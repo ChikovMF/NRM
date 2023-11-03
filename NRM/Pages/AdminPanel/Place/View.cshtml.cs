@@ -42,7 +42,7 @@ namespace NRM.Pages.AdminPanel.Place
 
         public async Task<IActionResult> OnPostDeleteMilitaryUnit(int idMilitaryUnit, int idPlace)
         {
-            await _placeService.DeleteMilitaryUnit(idMilitaryUnit);
+            await _placeService.DeleteMilitaryUnit(idMilitaryUnit, User.Identity.Name);
 
             return RedirectToPage("View", new { id = idPlace });
         }
