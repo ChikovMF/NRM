@@ -28,8 +28,8 @@ namespace NRM.Pages.AdminPanel.Parcel
         public async Task<IActionResult> OnPost(int id)
         {
             bool b = await _parcelService.ChangeStatusParcel(Input.StatusId, id, User.Identity.Name);
-            if (b) { ModelState.AddModelError(String.Empty, "Статус успешно сменен"); }
-            else ModelState.AddModelError(String.Empty, "Ошибка смены статуса");
+            if (b) { ModelState.AddModelError(String.Empty, "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ"); }
+            else ModelState.AddModelError(String.Empty, "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
             Parcel = await _parcelService.ViewParcel(id);
             Input.StatusItems = await _parcelService.GetParcelStatusSelect();
             return Page();
@@ -43,7 +43,7 @@ namespace NRM.Pages.AdminPanel.Parcel
 
         public class InputModel
         {
-            [Display(Name = "Статус РПО"), Required(ErrorMessage = "Введите статус РПО")]
+            [Display(Name = "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ"), Required(ErrorMessage = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ")]
             public int StatusId { get; set; }
             public List<SelectListItem>? StatusItems { get; set; }
         }

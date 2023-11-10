@@ -27,7 +27,7 @@ namespace NRM.Pages.AdminPanel.Place
             {
                 bool b = await _placeService.CreatePlace(Input);
                 if (b) return RedirectToPage("Index");
-                else ModelState.AddModelError(String.Empty, "Ошибка создания места");
+                else ModelState.AddModelError(String.Empty, "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ");
             }
             return Page();
         }

@@ -31,7 +31,7 @@ namespace NRM.Pages.AdminPanel.GroupParcel
             {
                 bool b = await _groupParcelService.CreateGroupParcel(Input, User.Identity.Name);
                 if (b) return RedirectToPage("Index");
-                else ModelState.AddModelError(String.Empty, "Ошибка создания группы РПО");
+                else ModelState.AddModelError(String.Empty, "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ");
             }
             return Page();
         }

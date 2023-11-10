@@ -30,8 +30,8 @@ namespace NRM.Pages.AdminPanel.User
             if (ModelState.IsValid)
             {
                 bool b = await _authorizationService.ChangePassword(id, Input.Password);
-                if (b) ModelState.AddModelError(String.Empty, "Пароль пользователя успешно сменен");
-                else ModelState.AddModelError(String.Empty, "Ошибка смены пользователя");
+                if (b) ModelState.AddModelError(String.Empty, "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ");
+                else ModelState.AddModelError(String.Empty, "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
             }
             User = await _authorizationService.ViewUser(id);
             return Page();
@@ -39,16 +39,16 @@ namespace NRM.Pages.AdminPanel.User
 
         public class InputModel
         {
-            [Display(Name = "Пароль"),
-                Required(ErrorMessage = "Введите пароль"),
+            [Display(Name = "пїЅпїЅпїЅпїЅпїЅпїЅ"),
+                Required(ErrorMessage = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ"),
                 DataType(DataType.Password),
-                StringLength(15, MinimumLength = 8, ErrorMessage = "Пароль должен содержать более 8 символов и не менее 15"),
-                RegularExpression("(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$", ErrorMessage = "Неверный формат пароля")]
+                StringLength(15, MinimumLength = 8, ErrorMessage = "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ 8 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ 15"),
+                RegularExpression("(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$", ErrorMessage = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ")]
             public string Password { get; set; }
-            [Required(ErrorMessage = "Подтвердите пароль"),
-                Compare("Password", ErrorMessage = "Пароли не совпадают"),
+            [Required(ErrorMessage = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ"),
+                Compare("Password", ErrorMessage = "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ"),
                 DataType(DataType.Password),
-                Display(Name = "Подтвердить пароль")]
+                Display(Name = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ")]
             public string PasswordConfirm { get; set; }
         }
     }
