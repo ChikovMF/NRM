@@ -179,7 +179,12 @@ namespace NRM.Services
                 PlaceOfDelivery = new ViewModel.Item { Id = s.PlaceOfDelivery.Id, Name= s.PlaceOfDelivery.Name },
                 PlaceOfDeparture = new ViewModel.Item { Id = s.PlaceOfDeparture.Id, Name = s.PlaceOfDeparture.Name },
                 Status = new ViewModel.Item { Id = s.Status.Id, Name = s.Status.Name},
-                User = new ViewModel.Item { Id = s.User.Id, Name = s.User.Login }
+                User = new ViewModel.UserItem { Id = s.User.Id, 
+                                                Name = s.User.Login, 
+                                                UName = $"{ s.User.LastName } " + 
+                                                    $"{s.User.FirstName} " + $"{s.User.Patronymic}", 
+                                                UWork = ((s.User.Place == null) ? string.Empty : s.User.Place.Name)
+                }
                 }).FirstOrDefaultAsync();
 
             return groupParcel;

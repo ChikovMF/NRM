@@ -72,8 +72,8 @@
                 <td><a asp-page="/AdminPanel/ParcelStatus/View" asp-route-id="@Model.GroupParcel.Status.Id">@Model.GroupParcel.Status.Name</a></td>
             </tr>
             <tr>
-                <td>Ответстсвенный за доставку</td>
-                <td><a asp-page="/AdminPanel/User/View" asp-route-id="@Model.GroupParcel.User.Id">@Model.GroupParcel.User.Name</a></td>
+                <td>Ответственный за доставку</td>
+                <td><a asp-page="/AdminPanel/User/View" asp-route-id="@Model.GroupParcel.User.Id">@Model.GroupParcel.User.Name</a>@($" {Model.GroupParcel.User.UName} ({Model.GroupParcel.User.UWork})")</td>
             </tr>
 
         </tbody>

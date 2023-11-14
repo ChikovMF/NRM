@@ -13,7 +13,7 @@ namespace NRM.Models.GroupParcelModels
         public Item PlaceOfDeparture { get; set; }
         public Item PlaceOfDelivery { get; set; }
         public Item Status { get; set; }
-        public Item User { get; set; }
+        public UserItem User { get; set; }
 
         public List<ParcelItem>? Parcels { get; set; }
         public List<ItemLogGroupParcels>? LogGroupParcels { get; set; }
@@ -22,6 +22,13 @@ namespace NRM.Models.GroupParcelModels
         {
             public int? Id { get; set; }
             public string? Name { get; set; }
+        }
+        public class UserItem
+        {
+            public int? Id { get; set; }
+            public string? Name { get; set; }
+            public string? UName { get; set; }
+            public string? UWork { get; set; }
         }
 
         public class ParcelItem
@@ -41,4 +48,5 @@ namespace NRM.Models.GroupParcelModels
             public string Type { get; set; }
         }
     }
+
 }
