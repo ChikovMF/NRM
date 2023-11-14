@@ -37,7 +37,7 @@ namespace NRM
                 {
                     Id = 2,
                     IsDeleted = false,
-                    Name = "Администратор пользователей",
+                    Name = "Администратор узла",
                 },
                 new Role
                 {
@@ -127,26 +127,31 @@ namespace NRM
                 new ParcelStatus
                 {
                     Id = 4,
-                    Name = "Получена промежуточным узлом"
+                    Name = "Доставляется"
                 },
                 new ParcelStatus
                 {
                     Id = 5,
-                    Name = "Отправлено с промежуточного узла"
+                    Name = "Получена промежуточным узлом"
                 },
                 new ParcelStatus
                 {
                     Id = 6,
-                    Name = "Получена конечным узлом"
+                    Name = "Отправлено с промежуточного узла"
                 },
                 new ParcelStatus
                 {
                     Id = 7,
-                    Name = "Ожидает вручения"
+                    Name = "Получена конечным узлом"
                 },
                 new ParcelStatus
                 {
                     Id = 8,
+                    Name = "Ожидает вручения"
+                },
+                new ParcelStatus
+                {
+                    Id = 9,
                     Name = "Вручена"
                 }
             });
@@ -171,6 +176,11 @@ namespace NRM
                 {
                     Id = 4,
                     Name = "Бандероль",
+                },
+                new ParcelType
+                {
+                    Id = 5,
+                    Name = "Письмо",
                 },
             });
             modelBuilder.Entity<RelationLogType>().HasData(new RelationLogType[]
