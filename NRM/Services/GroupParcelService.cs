@@ -178,8 +178,9 @@ namespace NRM.Services
                 }).ToList(),
                 PlaceOfDelivery = new ViewModel.Item { Id = s.PlaceOfDelivery.Id, Name= s.PlaceOfDelivery.Name },
                 PlaceOfDeparture = new ViewModel.Item { Id = s.PlaceOfDeparture.Id, Name = s.PlaceOfDeparture.Name },
-                Status = new ViewModel.Item { Id = s.Status.Id, Name = s.Status.Name}
-            }).FirstOrDefaultAsync();
+                Status = new ViewModel.Item { Id = s.Status.Id, Name = s.Status.Name},
+                User = new ViewModel.Item { Id = s.User.Id, Name = s.User.Login }
+                }).FirstOrDefaultAsync();
 
             return groupParcel;
         }

@@ -71,6 +71,11 @@
                 <td>Статус</td>
                 <td><a asp-page="/AdminPanel/ParcelStatus/View" asp-route-id="@Model.GroupParcel.Status.Id">@Model.GroupParcel.Status.Name</a></td>
             </tr>
+            <tr>
+                <td>Ответстсвенный за доставку</td>
+                <td><a asp-page="/AdminPanel/User/View" asp-route-id="@Model.GroupParcel.User.Id">@Model.GroupParcel.User.Name</a></td>
+            </tr>
+
         </tbody>
     </table>
 

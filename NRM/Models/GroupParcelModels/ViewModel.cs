@@ -13,6 +13,7 @@ namespace NRM.Models.GroupParcelModels
         public Item PlaceOfDeparture { get; set; }
         public Item PlaceOfDelivery { get; set; }
         public Item Status { get; set; }
+        public Item User { get; set; }
 
         public List<ParcelItem>? Parcels { get; set; }
         public List<ItemLogGroupParcels>? LogGroupParcels { get; set; }
