@@ -7,34 +7,52 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/NRM.styles.css" asp-append-version="true" />
-    @await RenderSectionAsync("Styles", required: false)
+    @await RenderSectionAsync("Styles", required: false)    
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 pb-2">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-page="/Index">АИС ФПС</a>
+                <a class="navbar-brand" asp-page="/Index"><img src="/img/fps.png" width="50" height="50"> АИС ФПС</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                        @* <li class="nav-item">
                             <a class="nav-link text-dark" asp-page="/Index">Главная</a>
-                        </li>
+                        </li> *@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-page="/AdminPanel/Index">Панель</a>
+                                <a class="nav-link text-dark" asp-page="/AdminPanel/Index">Панель управления</a>
                             </li>
+                            @if (User.IsInRole("Полный администратор") || User.IsInRole("Администратор посылок") || User.IsInRole("Пользователь"))
+                            {
+                                <li><a class="nav-link text-dark" asp-page="/AdminPanel/GroupParcel/Index">Группы РПО</a></li>
+                                <li><a class="nav-link text-dark" asp-page="/AdminPanel/Parcel/Index">РПО</a></li>
+                            }
+                            @if (User.IsInRole("Полный администратор") || User.IsInRole("Администратор узла"))
+                            {
+                                <li><a class="nav-link text-dark" asp-page="/AdminPanel/User/Index">Пользователи</a></li>
+                            }
+                            @if (User.IsInRole("Полный администратор") || User.IsInRole("Администратор посылок"))
+                            {                                
+                                <li><a class="nav-link text-dark" asp-page="/AdminPanel/ParcelStatus/Index">Статусы</a></li>                                
+                            }
+                            @if (User.IsInRole("Полный администратор"))
+                            {
+                                <li><a class="nav-link text-dark" asp-page="/AdminPanel/Place/Index">Места</a></li>
+                            }
                         }
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         @if(User.Identity.IsAuthenticated)
                         {
                             <li>
-                                <a class="nav-link text-dark" asp-page="/Logout">Выйти</a>
+                                @* <div>@User.Identity.Name</div> *@
+                                <a class="nav-link text-dark" asp-page="/Logout">(@User.Identity.Name) Выйти</a>
                             </li>
                         }
                         else
