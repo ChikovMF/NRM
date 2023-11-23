@@ -13,6 +13,8 @@
 
         public Item? Role { get; set; }
         public Item? Place { get; set; }
+        public string? DeviceID { get; set; }
+        public bool LoginAllowed { get; set; }
 
         public class Item
         {

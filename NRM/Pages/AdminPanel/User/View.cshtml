@@ -1,7 +1,7 @@
 ﻿@page "{id:int}"
 @model NRM.Pages.AdminPanel.User.ViewModel
 @{
-    ViewData["Title"] = $"Пользователь: {Model.User.Login}";
+    ViewData["Title"] = $"{Model.User.LastName} {Model.User.FirstName} {Model.User.Patronymic}";
 }
 
 <main>
@@ -55,11 +55,7 @@
             <tr>
                 <td>Логин</td>
                 <td>@Model.User.Login</td>
-            </tr>
-            <tr>
-                <td>ФИО</td>
-                <td>@($"{Model.User.LastName} {Model.User.FirstName} {Model.User.Patronymic}")</td>
-            </tr>
+            </tr>            
             <tr>
                 <td>Почта</td>
                 <td>@Model.User.Email</td>
@@ -77,6 +73,17 @@
                 <tr>
                     <td>Место работы:</td>
                     <td><a asp-page="/AdminPanel/Place/View" asp-route-id="@Model.User.Place.Id">@Model.User.Place.Name</a></td>
+                </tr>
+            }            
+            @if(Model.User.DeviceID != null)
+            {
+                <tr>
+                    <td>Закрепленное устройство:</td>
+                    <td>@Model.User.DeviceID</td>
+                </tr>
+                <tr>
+                    <td>Вход с устройства разрешен:</td>
+                    <td>@(Model.User.LoginAllowed != false ? "Да" : "Нет") </td>
                 </tr>
             }
         </tbody>

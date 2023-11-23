@@ -10,14 +10,13 @@
         public string? Email { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public string? Patronymic { get; set; }
-        
+        public string? Patronymic { get; set; }        
         public int RoleId { get; set; }
         public Role? Role { get; set; }
         public int? PlaceId { get; set; }
         public Place? Place { get; set; }
         public string? DeviceID {  get; set; }
-        public bool? LoginAllowed { get; set; } = false;
+        public bool LoginAllowed { get; set; } = false;
 
         public List<GroupParcel>? GroupParcels { get; set; }
     }

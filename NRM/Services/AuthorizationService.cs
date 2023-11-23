@@ -108,6 +108,8 @@ namespace NRM.Services
                 Patronymic = s.Patronymic,
                 Login = s.Login,
                 PhoneNumber = s.PhoneNumber,
+                DeviceID = s.DeviceID,
+                LoginAllowed = s.LoginAllowed,
                 Role = new ViewModel.Item
                 {
                     Id = s.Role.Id,
@@ -158,18 +160,22 @@ namespace NRM.Services
                 FirstName = s.FirstName,
                 LastName = s.LastName,
                 Patronymic = s.Patronymic,
-                PhoneNumber = s.PhoneNumber,
+                PhoneNumber = s.PhoneNumber,                
                 StartPlace = s.PlaceId == null ? null : new EditModel.Item
                 {
                     Id = s.Place.Id,
                     Name = s.Place.Name
-                },
-                RoleItems = _context.Roles.Where(w => !w.IsDeleted).Select(s => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+                },                
+                RoleItems = _context.Roles.Where(w => !w.IsDeleted).Select(ns => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
                 {
-                    Text = s.Name,
-                    Value = s.Id.ToString(),
-                    
-                }).ToList()
+                    Text = ns.Name,
+                    Value = ns.Id.ToString(),                   
+
+                }).ToList(),
+                RoleId = s.RoleId,
+                DeviceID = s.DeviceID,
+                
+                LoginAllowed = s.LoginAllowed
         }).FirstOrDefaultAsync();
             return user;
         }

@@ -13,43 +13,58 @@
     <form method="post">
         <div class="form-group">
             <label asp-for="Input.LastName"></label>
-            <input class="form-control form-control-sm" asp-for="Input.LastName" />
+            <input class="form-control form-control-sm" asp-for="Input.LastName" /><br>
             <span asp-validation-for="Input.LastName" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="Input.FirstName"></label>
-            <input class="form-control form-control-sm" asp-for="Input.FirstName" />
+            <input class="form-control form-control-sm" asp-for="Input.FirstName" /><br>
             <span asp-validation-for="Input.FirstName" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="Input.Patronymic"></label>
-            <input class="form-control form-control-sm" asp-for="Input.Patronymic" />
+            <input class="form-control form-control-sm" asp-for="Input.Patronymic" /><br>
             <span asp-validation-for="Input.Patronymic" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="Input.PhoneNumber"></label>
-            <input class="form-control form-control-sm" asp-for="Input.PhoneNumber" />
+            <input class="form-control form-control-sm" asp-for="Input.PhoneNumber" /><br>
             <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="Input.Email"></label>
-            <input class="form-control form-control-sm" asp-for="Input.Email" />
+            <input class="form-control form-control-sm" asp-for="Input.Email" /><br>
             <span asp-validation-for="Input.Email" class="text-danger"></span>
         </div>
 
         <div class="form-group">
+            <label asp-for="Input.DeviceID"></label>
+            <input class="form-control form-control-sm" asp-for="Input.DeviceID" /><br>
+            <span asp-validation-for="Input.DeviceID" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.LoginAllowed"></label>
+            <select class="form-control form-control-sm" asp-for="Input.LoginAllowed">
+                <option value=false>Нет</option>
+                <option value=true>Да</option>
+            </select><br>
+            <span asp-validation-for="Input.LoginAllowed" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
             <label asp-for="Input.PlaceId"></label>
-            <select class="form-control form-control-sm" asp-for="Input.PlaceId" id="select-places"></select>
+            <select class="form-control form-control-sm" asp-for="Input.PlaceId" id="select-places" ></select><br>
             <span asp-validation-for="Input.PlaceId" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="Input.RoleId"></label>
-            <select class="form-control form-control-sm" asp-for="Input.RoleId" asp-items="Model.Input.RoleItems"></select>
+            <select class="form-control form-control-sm" asp-for="Input.RoleId" asp-items="Model.Input.RoleItems"></select><br>
             <span asp-validation-for="Input.RoleId" class="text-danger"></span>
         </div>
 
