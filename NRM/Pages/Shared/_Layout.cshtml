@@ -28,20 +28,20 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-page="/AdminPanel/Index">Панель управления</a>
                             </li>
-                            @if (User.IsInRole("Полный администратор") || User.IsInRole("Администратор посылок") || User.IsInRole("Пользователь"))
+                            @if (User.IsInRole("Администратор") || User.IsInRole("Оператор отправлений") || User.IsInRole("Пользователь"))
                             {
                                 <li><a class="nav-link text-dark" asp-page="/AdminPanel/GroupParcel/Index">Группы РПО</a></li>
                                 <li><a class="nav-link text-dark" asp-page="/AdminPanel/Parcel/Index">РПО</a></li>
                             }
-                            @if (User.IsInRole("Полный администратор") || User.IsInRole("Администратор узла"))
+                            @if (User.IsInRole("Администратор") || User.IsInRole("Администратор узла"))
                             {
                                 <li><a class="nav-link text-dark" asp-page="/AdminPanel/User/Index">Пользователи</a></li>
                             }
-                            @if (User.IsInRole("Полный администратор") || User.IsInRole("Администратор посылок"))
+                            @if (User.IsInRole("Администратор") || User.IsInRole("Оператор отправлений"))
                             {                                
                                 <li><a class="nav-link text-dark" asp-page="/AdminPanel/ParcelStatus/Index">Статусы</a></li>                                
                             }
-                            @if (User.IsInRole("Полный администратор"))
+                            @if (User.IsInRole("Администратор"))
                             {
                                 <li><a class="nav-link text-dark" asp-page="/AdminPanel/Place/Index">Места</a></li>
                             }

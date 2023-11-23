@@ -5,7 +5,8 @@ using NRM.Services;
 
 namespace NRM.Pages.AdminPanel.GroupParcel
 {
-    [Authorize(Roles = "Полный администратор")]
+    [Authorize(Roles = "Администратор")]
+    [Authorize(Roles = "Администратор узла")]
     public class EditModel : PageModel
     {
         private readonly GroupParcelService _groupParcelService;

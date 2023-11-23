@@ -7,24 +7,24 @@
 <div class="row">
     <div class="col-3 border-end">
         <ul class="flex-column list-unstyled">
-            @if (User.IsInRole("Полный администратор") || User.IsInRole("Администратор посылок") || User.IsInRole("Пользователь"))
+            @if (User.IsInRole("Администратор") || User.IsInRole("Оператор отправлений") || User.IsInRole("Пользователь"))
             {
                 <li><a asp-page="GroupParcel/Index">Группы РПО</a></li>
                 <li><a asp-page="Parcel/Index">РПО</a></li>
             }
-            @if (User.IsInRole("Полный администратор") || User.IsInRole("Администратор узла"))
+            @if (User.IsInRole("Администратор") || User.IsInRole("Администратор узла"))
             {
                 <li><a asp-page="Role/Index">Роли</a></li>
                 <li><a asp-page="User/Index">Пользователи</a></li>
             }
-            @if (User.IsInRole("Полный администратор") || User.IsInRole("Администратор посылок"))
+            @if (User.IsInRole("Администратор") || User.IsInRole("Оператор отправлений"))
             {
                 <li><a asp-page="ParcelType/Index">Типы посылок</a></li>
                 <li><a asp-page="ParcelStatus/Index">Статусы</a></li>
                 <li><a asp-page="LogType/Index">Типы логов</a></li>
                 <li><a asp-page="LogParcel/Index">Логи посылок</a></li>
             }
-            @if (User.IsInRole("Полный администратор"))
+            @if (User.IsInRole("Администратор"))
             {
                 <li><a asp-page="Place/Index">Места</a></li>
             }

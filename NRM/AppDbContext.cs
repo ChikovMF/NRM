@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.EntityFrameworkCore;
 using NRM.Models.DataModels;
 
 namespace NRM
@@ -31,7 +33,7 @@ namespace NRM
                 {
                     Id = 1,
                     IsDeleted = false,
-                    Name = "Полный администратор",
+                    Name = "Администратор",
                 },
                 new Role
                 {
@@ -43,7 +45,7 @@ namespace NRM
                 {
                     Id = 3,
                     IsDeleted = false,
-                    Name = "Администратор посылок",
+                    Name = "Оператор отправлений",
                 },
                 new Role
                 {
@@ -52,6 +54,70 @@ namespace NRM
                     Name = "Пользователь",
                 }
             });
+            modelBuilder.Entity<Place>().HasData(new Place[]
+            {
+                new Place
+                {
+                    Id = 1,
+                    IsDeleted = false,
+                    Name = "6 ЦУ ФПС",
+                },
+                new Place
+                {
+                    Id = 2,
+                    IsDeleted = false,
+                    Name = "УФПС в/ч 31895",
+                },
+                new Place
+                {
+                    Id = 3,
+                    IsDeleted = false,
+                    Name = "УФПС в/ч 71609",
+                }
+            });
+            modelBuilder.Entity<MilitaryUnit>().HasData(new MilitaryUnit[]
+            {
+                new() {
+                    Id = 1,
+                    Name = "18425",
+                    PlaceId = 2,
+                },
+                new() {
+                    Id = 2,
+                    Name = "29303",
+                    PlaceId = 2,
+                },
+                new() {
+                    Id = 3,
+                    Name = "29310",
+                    PlaceId = 2,
+                },
+                new() {
+                    Id = 4,
+                    Name = "17640",
+                    PlaceId = 2,
+                },
+                new() {
+                    Id = 5,
+                    Name = "33840",
+                    PlaceId = 3,
+                },
+                new() {
+                    Id = 6,
+                    Name = "45420",
+                    PlaceId = 3,
+                },
+                new() {
+                    Id = 7,
+                    Name = "28460",
+                    PlaceId = 3,
+                },
+                new() {
+                    Id = 8,
+                    Name = "63940",
+                    PlaceId = 3,
+                },
+            });            
             modelBuilder.Entity<User>().HasData( new User[]
             {
                 new User
@@ -65,7 +131,8 @@ namespace NRM
                     LastName = "Чиков",
                     FirstName = "Матвей",
                     Patronymic = "Федорович",
-                    RoleId = 1
+                    RoleId = 1,
+                    PlaceId = 1,
                 },
                 new User
                 {
@@ -78,7 +145,8 @@ namespace NRM
                     LastName = "Иванов",
                     FirstName = "Иван",
                     Patronymic = "Иванович",
-                    RoleId = 3
+                    RoleId = 3,
+                    PlaceId = 1,
                 },
                 new User
                 {
@@ -91,7 +159,8 @@ namespace NRM
                     LastName = "Петров",
                     FirstName = "Петр",
                     Patronymic = "Петрович",
-                    RoleId = 2
+                    RoleId = 2,
+                    PlaceId = 1,
                 },
                 new User
                 {
@@ -104,7 +173,36 @@ namespace NRM
                     LastName = "Антонов",
                     FirstName = "Антон",
                     Patronymic = "Антонович",
-                    RoleId = 4
+                    RoleId = 4,
+                    PlaceId = 1,
+                },
+                new()
+                {
+                    Id = 5,
+                    IsDeleted = false,
+                    Login = "fe1",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("123!@#qweQWE"),
+                    Email = "fe1@mail.ru",
+                    PhoneNumber = "+79114561223",
+                    LastName = "Быстров",
+                    FirstName = "Алексей",
+                    Patronymic = "Петрович",
+                    RoleId = 3,
+                    PlaceId = 1,
+                },
+                new()
+                {
+                    Id = 6,
+                    IsDeleted = false,
+                    Login = "fe2",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("123!@#qweQWE"),
+                    Email = "fe1@mail.ru",
+                    PhoneNumber = "+79114567889",
+                    LastName = "Быстров",
+                    FirstName = "Николай",
+                    Patronymic = "Ефимович",
+                    RoleId = 3,
+                    PlaceId = 1,
                 },
             });
             modelBuilder.Entity<ParcelStatus>().HasData(new ParcelStatus[]
