@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using static System.Net.Mime.MediaTypeNames;
 namespace NRM.Controllers
 {
-    public class UploadController : Controller
+    public class UploadController : ControllerBase
     {
         private AppDbContext _context { get; set; }
 

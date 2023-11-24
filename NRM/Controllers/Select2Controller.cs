@@ -4,7 +4,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace NRM.Controllers
 {
-    public class Select2Controller : Controller
+    public class Select2Controller : ControllerBase
     {
         private AppDbContext _context { get; set; }
 
@@ -14,7 +14,7 @@ namespace NRM.Controllers
         }
 
         [HttpGet]
-        [Route("Select2/Parcels")]
+        [Route("[controller]/Parcels")]
         public async  Task<JsonResult> Parcels(string term)
         {
                 var list = await _context.Parcels.Where(p => !p.IsDeleted && p.TrackNumber.StartsWith(term)).Select(s => new
@@ -30,7 +30,7 @@ namespace NRM.Controllers
         }
 
         [HttpGet]
-        [Route("Select2/Users")]
+        [Route("[controller]/Users")]
         public async Task<JsonResult> Users(string term)
         {
             var list = await _context.Users
@@ -48,7 +48,7 @@ namespace NRM.Controllers
         }
 
         [HttpGet]
-        [Route("Select2/Places")]
+        [Route("[controller]/Places")]
         public async Task<JsonResult> Places(string term)
         {
             var list = await _context.Places
@@ -66,7 +66,7 @@ namespace NRM.Controllers
         }
 
         [HttpGet]
-        [Route("Select2/MilitaryUnits")]
+        [Route("[controller]/MilitaryUnits")]
         public async Task<JsonResult> MilitaryUnits(string term)
         {
             var list = await _context.MilitaryUnits

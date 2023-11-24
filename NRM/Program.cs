@@ -113,8 +113,8 @@ namespace NRM
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
                 endpoints.MapControllers();
+                endpoints.MapRazorPages();
             });
 
             app.Run();
