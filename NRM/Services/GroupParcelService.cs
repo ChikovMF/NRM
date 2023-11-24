@@ -254,7 +254,7 @@ namespace NRM.Services
                             $"Пользователь совершивший действие: {login}. " +
                             $"Время действия: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                         });
-                        parcel.LogParcels.Add(new Models.DataModels.LogParcel
+                        parcel.LogParcels.Add(new LogParcel
                         {
                             Parcel = parcel,
                             TypeId = 8,

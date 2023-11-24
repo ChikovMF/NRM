@@ -26,7 +26,7 @@ namespace NRM.Pages.AdminPanel.ParcelType
             {
                 bool b = await _parcelTypeService.CreateParcelType(Input);
                 if (b) return RedirectToPage("Index");
-                else ModelState.AddModelError(String.Empty, "������ �������� ���� ���");
+                else ModelState.AddModelError(String.Empty, "Ошибка создания типа статуса");
             }
             return Page();
         }

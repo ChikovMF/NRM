@@ -27,7 +27,7 @@ namespace NRM.Pages.AdminPanel.Parcel
             {
                 bool b = await _parcelService.EditParcel(Input, id, User.Identity.Name);
                 if (b) return RedirectToPage("View", new {id = id});
-                else ModelState.AddModelError(String.Empty, "������ ��������� ���");
+                else ModelState.AddModelError(String.Empty, "Ошибка при изменении РПО");
             }
             return Page();
         }
