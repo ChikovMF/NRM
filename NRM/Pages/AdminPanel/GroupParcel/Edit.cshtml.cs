@@ -5,8 +5,7 @@ using NRM.Services;
 
 namespace NRM.Pages.AdminPanel.GroupParcel
 {
-    [Authorize(Roles = "Администратор")]
-    [Authorize(Roles = "Администратор узла")]
+    [Authorize(Roles = "Администратор,Оператор отправлений")]
     public class EditModel : PageModel
     {
         private readonly GroupParcelService _groupParcelService;
@@ -28,9 +27,9 @@ namespace NRM.Pages.AdminPanel.GroupParcel
         {
             if (ModelState.IsValid)
             {
-                bool b = await _groupParcelService.EditGroupParcel(Input, id, User.Identity.Name);
-                if (b) return RedirectToPage("View", new { id = id });
-                else ModelState.AddModelError(String.Empty, "Ошибка изменения группы РПО");
+                string error = await _groupParcelService.EditGroupParcel(Input, id, User.Identity.Name);
+                if (string.IsNullOrEmpty(error)) return RedirectToPage("View", new { id = id });
+                else ModelState.AddModelError(String.Empty, error);
             }
             return Page();
         }

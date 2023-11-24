@@ -13,7 +13,7 @@
                 <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#statusModal">
                     Смена статуса
                 </button>
-                @if (User.IsInRole("Администратор") || User.IsInRole("Администратор узла"))
+                @if (User.IsInRole("Администратор") || User.IsInRole("Оператор отправлений"))
                 {
                     <a class="btn btn-sm btn-outline-secondary" asp-page="Edit" asp-route-id="@Model.GroupParcel.Id">Изменение группы РПО</a>
                 }
