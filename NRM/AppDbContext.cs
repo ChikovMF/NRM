@@ -372,7 +372,13 @@ namespace NRM
                     Id = 12,
                     Name = "Удаление места отправки/доставки группы РПО",
                     RelationId = 3,
-                }
+                },
+                new LogType
+                {
+                    Id = 13,
+                    Name = "РПО разгруппировано",
+                    RelationId = 2,
+                },
             });
         }
     }
