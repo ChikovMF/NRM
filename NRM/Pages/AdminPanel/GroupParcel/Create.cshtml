@@ -26,7 +26,7 @@
 
         <div class="form-group">
             <label asp-for="Input.PlaceOfDeliveryId"></label>
-            <select class="form-control" asp-for="Input.PlaceOfDeliveryId" id="select-placeOfDelivery">
+            <select class="form-control" asp-for="Input.PlaceOfDeliveryId" id="select-placeOfDelivery" onchange="changePlaceDelivery(this)">
             </select>
             <span asp-validation-for="Input.PlaceOfDeliveryId" class="text-danger"></span>
         </div>
@@ -89,5 +89,23 @@
         $('#select-placeOfDeparture').append('<option value="@encoder.Encode(Model.Input.StartUser.PlaceId.ToString())" selected="selected">@encoder.Encode(Model.Input.StartUser.Place ?? string.Empty)</option>');
         $('#select-users').append('<option value="@encoder.Encode(Model.Input.StartUser.Id.ToString())" selected="selected">@encoder.Encode(Model.Input.StartUser.FullName)</option>');
         $('#select-users').trigger('change');
+
+        // Заполнение посылок в зависимости от места назначения
+        function changePlaceDelivery(placeInput) {
+            $("#select-parsels").empty().trigger('change')
+            $.ajax({
+                url: '/api/Parcels/GetUnused',
+                method: 'GET',
+                data: {
+                    placeId: placeInput.value
+                }
+            }).then(function (result) {
+                // console.log('result', result)
+                for (let i = 0; i < result.length; i++) {
+                    $('#select-parsels').append(`<option value="${result[i].value}" selected = "selected">${result[i].text}</option>`);
+                }
+                $('#select-parsels').trigger('change');
+            })
+        }
     </script>
 }
