@@ -217,6 +217,10 @@ namespace NRM.Services
         /// <returns></returns>
         public async Task DeleteGroupParcel(int id, string login)
         {
+            var user = await _context.Users.AsNoTracking().Include(u => u.Place).FirstOrDefaultAsync(u => u.Login == login);
+
+            var status = await _context.ParcelStatus.FirstOrDefaultAsync(p => p.Id == 1);
+
             var groupParcel = await _context.GroupParcels.Where(w => !w.IsDeleted && w.Id == id)
                 .Include(i => i.Parcels).ThenInclude(t => t.LogParcels).Include(i => i.LogGroupParcels).FirstOrDefaultAsync();
             if (groupParcel != null)
@@ -234,10 +238,12 @@ namespace NRM.Services
                     $"Время удаления группы РПО: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                 });
                 if(groupParcel.Parcels != null)
-                {
+                {                    
                     foreach (var parcel in groupParcel.Parcels)
                     {
-                        parcel.IsDeleted = true;
+                        //parcel.IsDeleted = true;
+                        parcel.GroupParcelId = null;
+                        parcel.StatusId = 1;
                         parcel.LogParcels.Add(new Models.DataModels.LogParcel
                         {
                             Parcel = parcel,
@@ -245,10 +251,26 @@ namespace NRM.Services
                             Date = DateOnly.FromDateTime(DateTime.Now),
                             Time = TimeOnly.FromDateTime(DateTime.Now),
                             UserId = _context.Users.First(f => f.Login == login).Id,
-                            Message = $"Удалена РПО с трек-номером {parcel.TrackNumber}. " +
-                            $"Пользователь удаливший РПО: {login}. " +
+                            //Message = $"Удалена РПО с трек-номером {parcel.TrackNumber}. " +
+                            //$"Пользователь удаливший РПО: {login}. " +
+                            //$"Время удаления: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
+                            Message = $"Удаление группы РПО с трек-номером {groupParcel.TrackNumber}. " +
+                            $"Пользователь удаливший группу РПО: {login}. " +
                             $"Время удаления: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                         });
+                        parcel.LogParcels.Add(new Models.DataModels.LogParcel
+                        {
+                            Parcel = parcel,
+                            TypeId = 8,
+                            Date = DateOnly.FromDateTime(DateTime.Now),
+                            Time = TimeOnly.FromDateTime(DateTime.Now),
+                            UserId = _context.Users.First(f => f.Login == login).Id, 
+                            Message = $"Смена статуса РПО с трек-номером {parcel.TrackNumber}. " +
+                            $"Новый статус: {status.Name}. " +
+                            $"Пользователь сменивший статус РПО: {login}. " +
+                            ((user.Place == null) ? string.Empty : $"Место смены статуса: {user.Place.Name}. ") +
+                            $"Время смены статуса: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
+                            });
                     }
                 }
                 _context.SaveChanges();
