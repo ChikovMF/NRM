@@ -26,7 +26,7 @@ namespace NRM.Pages.AdminPanel.GroupParcel
         }
 
         public async Task<IActionResult> OnPost()
-        {
+        {  
             if (ModelState.IsValid)
             {
                 string error = await _groupParcelService.CreateGroupParcel(Input, User.Identity.Name);

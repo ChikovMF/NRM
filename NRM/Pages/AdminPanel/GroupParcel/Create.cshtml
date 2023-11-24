@@ -49,13 +49,22 @@
                 <option></option>
             </select>
             <span asp-validation-for="Input.ParcelsId" class="text-danger"></span>
-        </div>
-
-        @if (User.IsInRole("Администратор"))
+        </div>        
+        
+        @if (User.IsInRole("Администратор") || User.IsInRole("Администратор узла"))
         {
             <div class="form-group">
                 <label asp-for="Input.UserId"></label>
                 <select class="" asp-for="Input.UserId" id="select-users">
+                </select>
+                <span asp-validation-for="Input.UserId" class="text-danger"></span>
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <label asp-for="Input.UserId"></label>
+                <select class="" asp-for="Input.UserId" id="select-users" disabled>
                 </select>
                 <span asp-validation-for="Input.UserId" class="text-danger"></span>
             </div>
@@ -88,6 +97,6 @@
     <script type="text/javascript">
         $('#select-placeOfDeparture').append('<option value="@encoder.Encode(Model.Input.StartUser.PlaceId.ToString())" selected="selected">@encoder.Encode(Model.Input.StartUser.Place ?? string.Empty)</option>');
         $('#select-users').append('<option value="@encoder.Encode(Model.Input.StartUser.Id.ToString())" selected="selected">@encoder.Encode(Model.Input.StartUser.FullName)</option>');
-        $('#select-users').trigger('change');
+        $('#select-users').trigger('change');         
     </script>
 }
