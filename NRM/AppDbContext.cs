@@ -24,6 +24,7 @@ namespace NRM
         public DbSet<LogParcel> LogParcels { get; set; }
         public DbSet<LogGroupParcel> LogGroupParcels { get; set; }
         public DbSet<MilitaryUnit> MilitaryUnits { get; set; }
+        public DbSet<InvoicePhoto> InvoicePhoto { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
