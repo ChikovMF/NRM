@@ -28,8 +28,8 @@ namespace NRM.Pages.AdminPanel.Parcel
         public async Task<IActionResult> OnPost(int id)
         {
             bool b = await _parcelService.ChangeStatusParcel(Input.StatusId, id, User.Identity.Name);
-            if (b) { ModelState.AddModelError(String.Empty, "������ ������� ������"); }
-            else ModelState.AddModelError(String.Empty, "������ ����� �������");
+            if (b) { ModelState.AddModelError(String.Empty, "Статус РПО успешно сменен"); }
+            else ModelState.AddModelError(String.Empty, "Возникла ошибка смены статуса");
             Parcel = await _parcelService.ViewParcel(id);
             Input.StatusItems = await _parcelService.GetParcelStatusSelect();
             return Page();
@@ -43,7 +43,7 @@ namespace NRM.Pages.AdminPanel.Parcel
 
         public class InputModel
         {
-            [Display(Name = "������ ���"), Required(ErrorMessage = "������� ������ ���")]
+            [Display(Name = "Статус РПО"), Required(ErrorMessage = "Выберите статус РПО")]
             public int StatusId { get; set; }
             public List<SelectListItem>? StatusItems { get; set; }
         }

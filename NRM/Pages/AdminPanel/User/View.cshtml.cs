@@ -30,8 +30,8 @@ namespace NRM.Pages.AdminPanel.User
             if (ModelState.IsValid)
             {
                 bool b = await _authorizationService.ChangePassword(id, Input.Password);
-                if (b) ModelState.AddModelError(String.Empty, "������ ������������ ������� ������");
-                else ModelState.AddModelError(String.Empty, "������ ����� ������������");
+                if (b) ModelState.AddModelError(String.Empty, "Пароль пользователя успешно сменен");
+                else ModelState.AddModelError(String.Empty, "Ошибка смены пароля");
             }
             User = await _authorizationService.ViewUser(id);
             return Page();
@@ -39,16 +39,16 @@ namespace NRM.Pages.AdminPanel.User
 
         public class InputModel
         {
-            [Display(Name = "������"),
-                Required(ErrorMessage = "������� ������"),
+            [Display(Name = "Новый пароль"),
+                Required(ErrorMessage = "Введите пароль"),
                 DataType(DataType.Password),
-                StringLength(15, MinimumLength = 8, ErrorMessage = "������ ������ ��������� ����� 8 �������� � �� ����� 15"),
-                RegularExpression("(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$", ErrorMessage = "�������� ������ ������")]
+                StringLength(15, MinimumLength = 8, ErrorMessage = "Пароль должен быть более 8 и менее 15 символов"),
+                RegularExpression("(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$", ErrorMessage = "Введите корректный пароль")]
             public string Password { get; set; }
-            [Required(ErrorMessage = "����������� ������"),
-                Compare("Password", ErrorMessage = "������ �� ���������"),
+            [Required(ErrorMessage = "Подтвердите пароль"),
+                Compare("Password", ErrorMessage = "Пароли не совпадают"),
                 DataType(DataType.Password),
-                Display(Name = "����������� ������")]
+                Display(Name = "Повторите пароль")]
             public string PasswordConfirm { get; set; }
         }
     }

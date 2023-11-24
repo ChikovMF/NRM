@@ -29,7 +29,7 @@ namespace NRM.Pages.AdminPanel.User
             {
                 bool b = await _authorizationService.CreateUser(Input);
                 if (b) return RedirectToPage("Index");
-                else ModelState.AddModelError(String.Empty, "������ �������� ������������");
+                else ModelState.AddModelError(String.Empty, "Ошибка создания пользователя");
             }
             return Page();
         }

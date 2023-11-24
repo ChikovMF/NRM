@@ -241,24 +241,20 @@ namespace NRM.Services
                 {                    
                     foreach (var parcel in groupParcel.Parcels)
                     {
-                        //parcel.IsDeleted = true;
-                        parcel.GroupParcelId = null;
+                        parcel.GroupParcel = null;
                         parcel.StatusId = 1;
-                        parcel.LogParcels.Add(new Models.DataModels.LogParcel
+                        parcel.LogParcels.Add(new LogParcel
                         {
                             Parcel = parcel,
-                            TypeId = 4,
+                            TypeId = 13,
                             Date = DateOnly.FromDateTime(DateTime.Now),
                             Time = TimeOnly.FromDateTime(DateTime.Now),
                             UserId = _context.Users.First(f => f.Login == login).Id,
-                            //Message = $"Удалена РПО с трек-номером {parcel.TrackNumber}. " +
-                            //$"Пользователь удаливший РПО: {login}. " +
-                            //$"Время удаления: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
-                            Message = $"Удаление группы РПО с трек-номером {groupParcel.TrackNumber}. " +
-                            $"Пользователь удаливший группу РПО: {login}. " +
-                            $"Время удаления: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
+                            Message = $"РПО с трек-номером {parcel.TrackNumber} разгруппировано. " +
+                            $"Пользователь совершивший действие: {login}. " +
+                            $"Время действия: {TimeOnly.FromDateTime(DateTime.Now)} {DateOnly.FromDateTime(DateTime.Now)}"
                         });
-                        parcel.LogParcels.Add(new Models.DataModels.LogParcel
+                        parcel.LogParcels.Add(new LogParcel
                         {
                             Parcel = parcel,
                             TypeId = 8,
