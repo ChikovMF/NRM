@@ -21,11 +21,27 @@ namespace NRM.Services
         /// </summary>
         /// <param name="createModel">Данные групповой посылки для её создания.</param>
         /// <returns>bool значение, true - сохранение успешно завершено.</returns>
-        public async Task<bool> CreateGroupParcel(CreateModel createModel, string login)
+        public async Task<string> CreateGroupParcel(CreateModel createModel, string login)
         {
+            string errorString = string.Empty;
+
             if (GroupParcelRepeatCheck(createModel.TrackNumber))
             {
-                var user = await _context.Users.AsNoTracking().Include(u => u.Place).FirstOrDefaultAsync(u => u.Login == login);
+                var user = await _context.Users.AsNoTracking().Include(u => u.Place).FirstAsync(u => u.Login == login);
+
+                // Проверка пользователя (имеет ли он доступ устанавливать ответственного)
+                if(user.RoleId != 1)
+                {
+                    createModel.UserId = user.Id;
+                }
+                else
+                {
+                    if(createModel.UserId == null || createModel.UserId == 0)
+                    {
+                        errorString = "Введите ответственного";
+                        return errorString;
+                    }
+                }
 
                 var groupParcel = createModel.ToGroupParcel();
                 groupParcel.Parcels = new();
@@ -47,10 +63,14 @@ namespace NRM.Services
                     $"Время создания: {DateOnly.FromDateTime(DateTime.Now)} {TimeOnly.FromDateTime(DateTime.Now)}"
                 });
                 await _context.GroupParcels.AddAsync(groupParcel);
-                _context.SaveChanges();
-                return true;
+                int ch = await _context.SaveChangesAsync();
+
+                if (ch == 0)
+                {
+                    errorString = "Ошибка создания РПО";
+                }
             }
-            else return false;
+            return errorString;
         }
 
         /// <summary>
@@ -269,10 +289,29 @@ namespace NRM.Services
         /// </summary>
         /// <param name="id">id групповой посылки</param>
         /// <returns>true - изменение данных прошло успешно</returns>
-        public async Task<bool> EditGroupParcel(EditModel editModel, int id, string login)
+        public async Task<string> EditGroupParcel(EditModel editModel, int id, string login)
         {
+            string errorString = String.Empty;
+
+            var user = await _context.Users.AsNoTracking().Include(u => u.Place).FirstAsync(u => u.Login == login);
+
             var groupParcel = await _context.GroupParcels.Where(w => !w.IsDeleted && w.Id == id)
                 .Include(i => i.LogGroupParcels).Include(i => i.Parcels).FirstOrDefaultAsync();
+
+            // Проверка пользователя (имеет ли он доступ устанавливать ответственного)
+            if (user.RoleId != 1)
+            {
+                editModel.UserId = user.Id;
+            }
+            else
+            {
+                if (editModel.UserId == null || editModel.UserId == 0)
+                {
+                    errorString = "Введите ответственного";
+                    return errorString;
+                }
+            }
+
             if (groupParcel != null)
             {
                 var userId = _context.Users.First(f => f.Login == login).Id;
@@ -295,10 +334,14 @@ namespace NRM.Services
                 {
                     groupParcel = await AddingToGroup(groupParcel, parcelId);
                 }
-                _context.SaveChanges();
-                return true;
+                int ch = await _context.SaveChangesAsync();
+
+                if (ch == 0)
+                {
+                    errorString = "Ошибка создания РПО";
+                }
             }
-            return false;
+            return errorString;
         }
 
         /// <summary>

@@ -51,12 +51,15 @@
             <span asp-validation-for="Input.ParcelsId" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
-            <label asp-for="Input.UserId"></label>
-            <select class="" asp-for="Input.UserId" id="select-users">
-            </select>
-            <span asp-validation-for="Input.UserId" class="text-danger"></span>
-        </div>
+        @if (User.IsInRole("Администратор"))
+        {
+            <div class="form-group">
+                <label asp-for="Input.UserId"></label>
+                <select class="" asp-for="Input.UserId" id="select-users">
+                </select>
+                <span asp-validation-for="Input.UserId" class="text-danger"></span>
+            </div>
+        }
 
         <p>
             <div class="form-group">

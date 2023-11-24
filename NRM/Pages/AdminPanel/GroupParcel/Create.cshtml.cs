@@ -29,9 +29,9 @@ namespace NRM.Pages.AdminPanel.GroupParcel
         {
             if (ModelState.IsValid)
             {
-                bool b = await _groupParcelService.CreateGroupParcel(Input, User.Identity.Name);
-                if (b) return RedirectToPage("Index");
-                else ModelState.AddModelError(String.Empty, "������ �������� ������ ���");
+                string error = await _groupParcelService.CreateGroupParcel(Input, User.Identity.Name);
+                if (string.IsNullOrEmpty(error)) return RedirectToPage("Index");
+                else ModelState.AddModelError(String.Empty, error);
             }
             return Page();
         }

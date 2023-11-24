@@ -24,9 +24,8 @@ namespace NRM.Models.GroupParcelModels
         [Required(ErrorMessage = "Выберите место доставки"), 
             DisplayName("Место доставки")]
         public int PlaceOfDeliveryId { get; set; }
-        [Required(ErrorMessage = "Введите ответственного"), 
-            DisplayName("Ответственный")]
-        public int UserId { get; set; }
+        [DisplayName("Ответственный")]
+        public int? UserId { get; set; }
         [Required(ErrorMessage = "Выберите РПО"), DisplayName("Список РПО")]
         public List<int> ParcelsId { get; set; }
         public StartUserItem? StartUser { get; set; }
@@ -47,7 +46,7 @@ namespace NRM.Models.GroupParcelModels
                 TrackNumber = TrackNumber,
                 PlaceOfDepartureId = PlaceOfDepartureId,
                 PlaceOfDeliveryId = PlaceOfDeliveryId,
-                UserId = UserId,
+                UserId = UserId ?? throw new ArgumentException("Ответственный за группу РПО пуст."),
                 StatusId = 1,
                 DepartureTime = DepartureTime,
             };
