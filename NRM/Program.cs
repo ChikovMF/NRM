@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using NRM.Services;
@@ -14,6 +15,13 @@ namespace NRM
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+
+
+        builder.WebHost.ConfigureKestrel(serverOptions =>
+            {
+                serverOptions.Limits.MaxRequestBodySize = long.MaxValue;
+            });
 
             builder.Services.AddRazorPages(options =>
             {
@@ -75,6 +83,11 @@ namespace NRM
             builder.Services.AddScoped<ExcelService>();
             builder.Services.AddTransient<ParcelFilterDropdownService>();
 
+            builder.Services.Configure<IISServerOptions>(options =>
+            {
+                options.MaxRequestBodySize = int.MaxValue; // максимальный размер загружаемых файлов в байтах 2гб
+            });
+
             var app = builder.Build();
 
             /*
@@ -116,6 +129,8 @@ namespace NRM
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });
+
+
 
             app.Run();
         }
