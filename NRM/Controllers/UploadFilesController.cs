@@ -14,6 +14,7 @@ namespace NRM.Controllers
 
         [HttpPost]
         [Route("Uploads")]
+        [DisableRequestSizeLimit,RequestFormLimits(MultipartBodyLengthLimit = int.MaxValue, ValueLengthLimit = int.MaxValue)]
         public async Task<IActionResult> getFiles(List<IFormFile> files)
         {
             var uploadPath = $"{Directory.GetCurrentDirectory()}/wwwroot/uploads";
@@ -43,7 +44,7 @@ namespace NRM.Controllers
 
             return Ok(new { fileUrls });
         }
-
+            
        
     }
 }
@@ -52,25 +53,50 @@ namespace NRM.Controllers
 
 
 
-/*
-[HttpPost]
-        [Route("Uploads")]
-        public async  Task<JsonResult> getFiles(IFormFile file)
-        {
-                
-                var uploadPath = $"{Directory.GetCurrentDirectory()}/wwwroot/uploads";
-                // создаем папку для хранения файлов
-                Directory.CreateDirectory(uploadPath);
-                string fullPath = $"{uploadPath}/{file.FileName}";
-                Console.WriteLine("text");
-                // сохраняем файл в папку uploads
-                using (var fileStream = new FileStream(fullPath, FileMode.Create))
-                {
-                    await file.CopyToAsync(fileStream);
-                }
 
-                return new JsonResult(
-                    "status : ok"
-                );
+        /*
+
+        [HttpPost]
+        [Route("Uploads")]
+        [RequestSizeLimit(int.MaxValue)]
+        public async Task<IActionResult> getFiles(List<IFormFile> files)
+        {
+            var uploadPath = $"{Directory.GetCurrentDirectory()}/wwwroot/uploads";
+            
+            if (!Directory.Exists(uploadPath))
+            {
+                Directory.CreateDirectory(uploadPath);
+            }
+
+            var fileUrls = new List<string>();
+
+            foreach (var file in files)
+            {
+                if (file.Length > 0)
+                {
+                    string filePath = $"{uploadPath}/{file.FileName}";
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        var buffer = new byte[8192]; // размер буффера.
+                        int bytesRead;
+                        
+                        using (var inputStream = file.OpenReadStream())
+                        {
+                            while ((bytesRead = await inputStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                            {
+                                await fileStream.WriteAsync(buffer, 0, bytesRead);
+                            }
+                        }
+                    }
+
+                    fileUrls.Add(filePath);
+                }
+            }
+
+            return Ok(new { fileUrls });
         }
-*/
+
+        */
+
+        
