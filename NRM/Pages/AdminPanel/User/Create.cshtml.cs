@@ -27,10 +27,11 @@ namespace NRM.Pages.AdminPanel.User
         {
             if (ModelState.IsValid)
             {
-                bool b = await _authorizationService.CreateUser(Input);
-                if (b) return RedirectToPage("Index");
-                else ModelState.AddModelError(String.Empty, "Ошибка создания пользователя");
+                string error = await _authorizationService.CreateUser(Input, User.Identity.Name);
+                if (error == string.Empty) return RedirectToPage("Index");
+                else ModelState.AddModelError(String.Empty, error);
             }
+            Input.RoleItems = await _authorizationService.GetRolesSelect();
             return Page();
         }
     }

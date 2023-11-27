@@ -42,13 +42,16 @@
             <span asp-validation-for="Input.Email" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
-            <label asp-for="Input.PlaceId"></label>
-            <select class="form-control" asp-for="Input.PlaceId" id="select-places">
-                <option></option>
-            </select>
-            <span asp-validation-for="Input.PlaceId" class="text-danger"></span>
-        </div>
+        @if (User.IsInRole("Администратор"))
+        {
+            <div class="form-group">
+                <label asp-for="Input.PlaceId"></label>
+                <select class="form-control" asp-for="Input.PlaceId" id="select-places">
+                    <option></option>
+                </select>
+                <span asp-validation-for="Input.PlaceId" class="text-danger"></span>
+            </div>
+        }
 
         <div class="form-group">
             <label asp-for="Input.Password"></label><br />

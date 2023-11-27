@@ -35,8 +35,8 @@ namespace NRM.Models.UserModels
         [Display(Name = "Отчество"),
              Required(ErrorMessage = "Введите отчество")]
         public string Patronymic { get; set; }
-        [Required(ErrorMessage = "Введите место работы"), Display(Name = "Место работы")]
-        public int PlaceId { get; set; }
+        [Display(Name = "Место работы")]
+        public int? PlaceId { get; set; }
         [Display(Name = "Роль пользователя"),
             Required(ErrorMessage = "Введите роль пользователя")]
         public int RoleId { get; set; }

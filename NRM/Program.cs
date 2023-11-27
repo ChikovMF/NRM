@@ -45,13 +45,13 @@ namespace NRM
             builder.Services.AddAuthorization(options =>
             {
                 options.AddPolicy("Только администратор", policyBuilder
-                    => policyBuilder.RequireRole(Claims.FullAccessEnter));
+                    => policyBuilder.RequireRole(Claims.FullAccessEnter, Claims.UserAdministratorEnter));
                 options.AddPolicy("Управление пользователями", policyBuilder
                     => policyBuilder.RequireRole(Claims.UserAdministratorEnter, Claims.FullAccessEnter));
                 options.AddPolicy("Управление посылками", policyBuilder
-                    => policyBuilder.RequireRole(Claims.ParcelAdministratorEnter, Claims.FullAccessEnter));
+                    => policyBuilder.RequireRole(Claims.ParcelAdministratorEnter, Claims.FullAccessEnter, Claims.UserAdministratorEnter));
                 options.AddPolicy("Пользователь", policyBuilder
-                    => policyBuilder.RequireRole(Claims.UserEnter, Claims.ParcelAdministratorEnter, Claims.FullAccessEnter));
+                    => policyBuilder.RequireRole(Claims.UserEnter, Claims.ParcelAdministratorEnter, Claims.FullAccessEnter, Claims.UserAdministratorEnter));
             });
             builder.Services.AddControllers();
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

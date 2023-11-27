@@ -34,15 +34,37 @@ namespace NRM.Services
         /// </summary>
         /// <param name="createModel">Данные пользователя для его создания.</param>
         /// <returns>bool значение, true сохранение успешно завершено.</returns>
-        public async Task<bool> CreateUser(CreateModel createModel)
+        public async Task<string> CreateUser(CreateModel createModel, string login)
         {
+            var user = await _context.Users.AsNoTracking().Include(u => u.Place).FirstAsync(u => u.Login == login);
+
+            string errorString = string.Empty;
+
+            //Required(ErrorMessage = "Введите место работы"), 
             if (UserRepeatCheck(createModel.Login))
             {
+                if (user.RoleId != 1)
+                {
+                    createModel.PlaceId = user.PlaceId;
+                }
+                else
+                {
+                    if (createModel.PlaceId == null || createModel.PlaceId == 0)
+                    {
+                        errorString = "Введите место работы";
+                        return errorString;
+                    }
+                }
+
                 await _context.Users.AddAsync(createModel.ToUser());
-                _context.SaveChanges();
-                return true;
+                int ch = await _context.SaveChangesAsync();
+
+                if (ch == 0)
+                {
+                    errorString = "Ошибка создания пользователя";
+                }
             }
-            else return false;
+            return errorString;
         }
 
         /// <summary>
