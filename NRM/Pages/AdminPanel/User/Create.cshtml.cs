@@ -20,7 +20,9 @@ namespace NRM.Pages.AdminPanel.User
 
         public async Task OnGet()
         {
-            Input.RoleItems = await _authorizationService.GetRolesSelect();
+            
+            Input.RoleItems = await _authorizationService.GetRolesSelect(1, User.Identity.Name);
+            
         }
 
         public async Task<IActionResult> OnPost()

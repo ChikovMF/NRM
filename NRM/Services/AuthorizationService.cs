@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NRM.Models.DataModels;
 using NRM.Models.UserModels;
-
+using System.Runtime.CompilerServices;
 namespace NRM.Services
 {
     public class AuthorizationService
@@ -71,21 +71,36 @@ namespace NRM.Services
         /// Получение Select с ролями пользователей
         /// </summary>
         /// <returns>Список SelectListItem</returns>
-        public async Task<List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>> GetRolesSelect(int roleId = 1)
+        public async Task<List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>> GetRolesSelect(int roleId = 1, string targetLogin = "")
         {
-            var SelectList = await _context.Roles.Where(w => !w.IsDeleted).Select(s => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+            //int role = _context.Users.Where(u => !u.IsDeleted).FirstOrDefaultAsync(u => u.Login == Login).Result.RoleId;
+
+            //var list = _context.Database.SqlQuery<Role>(FormattableStringFactory.Create("""SELECT "Id", "IsDeleted", "Name" FROM public."Roles" WHERE "Name" != 'Администратор';"""));
+            //var user = await _context.Users.Where(w => !w.IsDeleted && w.Login == loginModel.Login).Include(i => i.Role).FirstOrDefaultAsync();
+
+            var user = await _context.Users.FirstAsync(u => u.Login == targetLogin);
+
+            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>? SelectList;
+
+            if (user.RoleId != 1)
             {
-                Text = s.Name,
-                Value = s.Id.ToString()
-            }).ToListAsync();
-            /*
-            var activItem = SelectList.Where(w => w.Value == roleId.ToString()).FirstOrDefault();
-            if(activItem != null)
-            {
-                activItem.Selected = true;
+                SelectList = await _context.Roles.Where(w => !w.IsDeleted && w.Name != "Администратор").Select(s => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+                    {
+                        Text = s.Name,
+                        Value = s.Id.ToString()
+                    }).ToListAsync();
             }
-            */
-            return SelectList;
+            else
+            {
+                SelectList = await _context.Roles.Where(w => !w.IsDeleted).Select(s => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+                    {
+                        Text = s.Name,
+                        Value = s.Id.ToString()
+                    }).ToListAsync(); 
+            }
+
+              
+            return SelectList;//(List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>)list;
         }
 
         /// <summary>
