@@ -97,14 +97,28 @@ namespace NRM.Services
         /// Получение списка пользователей.
         /// </summary>
         /// <returns>Список<TableModel> с пользователями.</returns>
-        public async Task<List<TableModel>> GetTableUsers()
+        public async Task<List<TableModel>> GetTableUsers(string userLogin)
         {
-            return await _context.Users.Where(w => !w.IsDeleted).Select(s => new TableModel
+            var currentUser = await _context.Users.FirstAsync(u => u.Login == userLogin);
+
+            if (currentUser.RoleId != 1)
             {
-                Login = s.Login,
-                FullName = $"{s.LastName} {s.FirstName} {s.Patronymic}",
-                Id = s.Id,
-            }).ToListAsync();
+                return await _context.Users.Where(w => !w.IsDeleted && w.PlaceId == currentUser.PlaceId).Select(s => new TableModel
+                {
+                    Login = s.Login,
+                    FullName = $"{s.LastName} {s.FirstName} {s.Patronymic}",
+                    Id = s.Id,
+                }).ToListAsync();
+            }
+            else
+            {
+                return await _context.Users.Where(w => !w.IsDeleted).Select(s => new TableModel
+                {
+                    Login = s.Login,
+                    FullName = $"{s.LastName} {s.FirstName} {s.Patronymic}",
+                    Id = s.Id,
+                 }).ToListAsync();  
+            }
         }
 
         /// <summary>
