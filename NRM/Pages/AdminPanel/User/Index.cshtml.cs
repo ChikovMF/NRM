@@ -19,7 +19,7 @@ namespace NRM.Pages.AdminPanel.User
 
         public async Task OnGet()
         {
-            Users = await _authorizationService.GetTableUsers();
+            Users = await _authorizationService.GetTableUsers(User.Identity.Name);
         }
     }
 }
